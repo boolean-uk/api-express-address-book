@@ -120,6 +120,7 @@ Implement the API for the Address Book Challenge using the [client app](https://
 Before you begin, the API is going to use global variables to hold data - which will persist while the application is running, but won't persist in between application restarts.
 
 Let's add a file to store our contacts and then export them for our express application to use (starting in `index.js` probably)
+Find expected response data in https://github.com/boolean-uk/api-sample-client/tree/main/data
 
 ```js
 const contacts = require('./data/contacts')

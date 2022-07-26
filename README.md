@@ -117,6 +117,8 @@ app.get("/", (req, res) => {
 
 Implement the API for the Address Book Challenge using the [client app](https://github.com/boolean-uk/api-sample-client).
 
+Use the [API Spec](https://boolean-uk.github.io/api-express-address-book/) as your source of requirements for each endpoint you need to build.
+
 Before you begin, the API is going to use global variables to hold data - which will persist while the application is running, but won't persist in between application restarts.
 
 Let's add a file to store our contacts and then export them for our express application to use (starting in `index.js` probably)

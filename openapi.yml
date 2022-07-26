@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  title: Address Book API
+  version: 0.0.1
+servers:
+  - url: http://localhost:3030
+basePath: /
+schemes:
+  - http
+paths:
+  /contacts:
+    get:
+      summary: Retrieve a list of contacts
+      tags:
+        - contacts
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+    post:
+      summary: Create a contact
+      tags:
+        - contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactPost"
+      responses:
+        201:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    $ref: "#/components/schemas/Contact"
+  /contacts/{id}:
+    get:
+      summary: Get a single contact by ID
+      tags:
+        - contacts
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    $ref: "#/components/schemas/Contact"
+    delete:
+      summary: Delete a single contact by ID
+      tags:
+        - contacts
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+    put:
+      summary: Update a contact by ID
+      tags:
+        - contacts
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactPost"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    $ref: "#/components/schemas/Contact"
+
+
+components:
+  schemas:
+    Contact: 
+      type: object
+      properties:
+        id: 
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        city: 
+          type: string
+        type:
+          type: string
+        email:
+          type: string
+        linkedin:
+          type: string
+        twitter:
+          type: string
+        meetings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meeting'
+    ContactPost: 
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        city: 
+          type: string
+        type:
+          type: string
+        email:
+          type: string
+        linkedin:
+          type: string
+        twitter:
+          type: string
+    Meeting: 
+      type: object
+      properties:
+        id: 
+          type: integer
+        contactId:
+          type: integer
+        name:
+          type: string

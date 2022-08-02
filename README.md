@@ -134,11 +134,13 @@ const contacts = require('./data/contacts')
 3. Run the client app from your terminal.
 
 4. Create an express application following the steps above.
-3. Implement the API for the client app, starting with the `contacts` endpoint
+5. Implement the API for the client app, starting with the `contacts` endpoint, following this workflow for **each** endpoint:
+    1. Diagram the endpoint lifecycle in a sequence diagram, using the image below these steps as a starting point
+    2. Implement the endpoint
+    3. Test the endpoint using any method you like; the client app with console logs, Insomnia, curl etc.
+
+![](./assets/API%20Address%20Book.png)
 
 # Extension
 
-1. Implement GET, POST, PUT and DELETE endpoints for `meetings`
-2. Create a sequence diagram of the entire API using the image below as a starting point. You can use any tool you like to do this, including pen and paper. Add an image of your diagram into the root directory of this exercise.
-
-![](./assets/API%20Address%20Book.png)
+Implement GET, POST, PUT and DELETE endpoints for `meetings` following the same workflow as above

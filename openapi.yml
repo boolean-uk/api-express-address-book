@@ -96,6 +96,25 @@ paths:
                   contact:
                     type: object
                     $ref: "#/components/schemas/Contact"
+  /contacts/{id}/meetings:
+    get:
+      summary: Get meetings for a specific contact
+      tags:
+        - contacts
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meetings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Meeting'
 
 
 components:

@@ -115,6 +115,26 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Meeting'
+    post:
+      summary: Create a meeting for a contact
+      tags:
+        - meetings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingPostContact"
+    put:
+      summary: Update a meeting for a contact
+      tags:
+        - meetings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingPostContact"
   /meetings:
     get:
       summary: Retrieve a list of all meetings
@@ -215,5 +235,10 @@ components:
       properties:
         contactId:
           type: integer
+        name:
+          type: string
+    MeetingPostContact:
+      type: object
+      properties:
         name:
           type: string

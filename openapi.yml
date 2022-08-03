@@ -118,7 +118,7 @@ paths:
     post:
       summary: Create a meeting for a contact
       tags:
-        - meetings
+        - contacts
       requestBody:
         required: true
         content:
@@ -128,7 +128,7 @@ paths:
     put:
       summary: Update a meeting for a contact
       tags:
-        - meetings
+        - contacts
       requestBody:
         required: true
         content:

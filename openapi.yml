@@ -86,7 +86,7 @@ paths:
             schema:
               $ref: "#/components/schemas/ContactPost"
       responses:
-        200:
+        201:
           description: OK
           content:
             application/json:
@@ -125,6 +125,17 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/MeetingPostContact"
+      responses:
+        201:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    $ref: "#/components/schemas/Meeting"
     put:
       summary: Update a meeting for a contact
       tags:
@@ -135,6 +146,17 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/MeetingPostContact"
+      responses:
+        201:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    $ref: "#/components/schemas/Meeting"
   /meetings:
     get:
       summary: Retrieve a list of all meetings

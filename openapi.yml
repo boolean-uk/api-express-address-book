@@ -115,6 +115,44 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Meeting'
+  /meetings:
+    get:
+      summary: Retrieve a list of all meetings
+      tags:
+        - meetings
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meetings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Meeting'
+    post:
+      summary: Create a meeting
+      tags:
+        - meetings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingPost"
+      responses:
+        201:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    $ref: "#/components/schemas/Meeting"
 
 
 components:
@@ -168,6 +206,13 @@ components:
       properties:
         id: 
           type: integer
+        contactId:
+          type: integer
+        name:
+          type: string
+    MeetingPost:
+      type: object
+      properties:
         contactId:
           type: integer
         name:

@@ -73,6 +73,14 @@ paths:
       responses:
         200:
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    $ref: "#/components/schemas/Contact"
     put:
       summary: Update a contact by ID
       tags:
@@ -136,6 +144,7 @@ paths:
                   meeting:
                     type: object
                     $ref: "#/components/schemas/Meeting"
+  /contacts/{id}/meetings/{meetingId}:
     put:
       summary: Update a meeting for a contact
       tags:

@@ -54,6 +54,8 @@ const app = express()
 app.use(morgan("dev"))
 //Tell express we want to use the cors library
 app.use(cors())
+//Tell express to parse JSON in the request body
+app.use(express.json())
 
 //Start up our server
 const port = 3030

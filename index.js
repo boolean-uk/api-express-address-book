@@ -5,11 +5,19 @@ const allMettings = require("./data/meetings");
 const contacts = allContacts.contacts;
 const meetings = allMettings.meetings;
 const app = express();
-
 app.use(express.json());
 app.use(morgan());
 
 app.get("/contacts", (req, res) => {
+  contacts.forEach((contact) => {
+    contact.meetings = [];
+    meetings.forEach((meeting) => {
+      if (contact.id === Number(meeting.contactId)) {
+        contact.meetings.push(meeting);
+      }
+    });
+  });
+
   res.json({ contacts: contacts });
 });
 
@@ -19,29 +27,26 @@ app.get("/contacts/:id", (req, res) => {
   if (!contact) {
     return res.status(404).json({ message: "not found" });
   }
-  res.json(contact);
+  res.json({ contacts: contacts });
 });
 
 app.delete("/contacts/:id", (req, res) => {
   const { id } = req.params;
-  contacts.forEach((item, index) => {
-    if (item.id === id) {
-      return counters.splice(index, 1);
-    }
-  });
-  res.json(contacts);
+  const contact = contacts.find((item) => item.id === id);
+  contacts.splice(contacts.indexOf(contact), 1);
+  res.json({ contacts: contacts });
 });
 
 app.post("/contacts", (req, res) => {
-  contacts.push({ ...req.body });
-  res.json({ id: contacts.length + 1, ...req.body });
+  contacts.push({ ...req.body, id: contacts.length + 1 });
+  res.json({ ...req.body });
 });
 
 app.put("/contacts/:id", (req, res) => {
   const { id } = req.params;
   let contact = contacts.find((item) => item.id === Number(id));
   contact = { ...req.body };
-  res.json(contact);
+  res.json({ contacts: contacts });
 });
 
 // MEETINGS
@@ -52,7 +57,7 @@ app.get("/meetings", (req, res) => {
 
 app.post("/meetings", (req, res) => {
   req.body.contactId = req.body.contactId.toString();
-  const meeting = { ...req.body, id: meetings.length + 1 };
+  const meeting = { contactId: req.body.contactId, name: req.body.name, id: meetings.length + 1 };
   meetings.push(meeting);
   res.json(meetings);
 });

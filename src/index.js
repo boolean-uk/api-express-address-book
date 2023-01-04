@@ -28,7 +28,7 @@ app.post("/contacts", (req, res) => {
   const contactGiven = req.body;
   let uniqueId = 0;
   contacts.contacts.forEach((contact) => {
-    uniqueId = contact.id + 1
+    uniqueId = contact.id + 1;
     console.log(contact.id, "hoh");
   });
   contactGiven.id = uniqueId;
@@ -37,6 +37,19 @@ app.post("/contacts", (req, res) => {
   // console.log(contacts, " contacts");
   res.json(contacts);
 });
+// get single contact by ID
+app.get("/contacts/:id", (req, res) => {
+  const paramID = Number(req.params.id);
+
+  const chosenId = contacts.contacts.find((contact) => contact.id === paramID);
+
+  console.log(chosenId);
+  res.json(chosenId);
+  console.log(req.params.id, "hi");
+});
+// Delete a single contact by ID
+
+
 
 //Start up our server
 const port = 3030;

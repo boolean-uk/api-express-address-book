@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 let contacts = require("../data/contacts");
-
+let meetings = require("../data/meetings");
 // add your routes here
 app.get("/contacts", (req, res) => {
   res.json(contacts);
@@ -54,7 +54,30 @@ app.put("/contacts/:id", (req, res) => {
 
   console.log(contact);
 
-  res.json({ contact: contact });
+  res.status(201).json({ contact: contact });
 });
 
+// Extension
+
+app.get("/meetings", (req, res) => {
+  res.json(meetings);
+});
+
+app.get("/meetings/:id", (req, res) => {
+  const meeting = meetings.find((item) => item.id === Number(req.params.id));
+  res.json(meeting);
+});
+
+app.delete("/meetings/:id", (req, res) => {
+  const meeting = meetings.find((item) => item.id === Number(req.params.id));
+  const index = meetings.indexOf(meeting);
+  meetings.splice(index, 1);
+  res.json();
+});
+
+app.put("/meetings/:id", (req, res) => {
+  const meeting = meetings.find((item) => item.id === Number(req.params.id));
+  meeting.name = req.body.name;
+  res.status(201).json(meeting);
+});
 module.exports = app;

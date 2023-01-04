@@ -36,7 +36,7 @@ app.post('/contacts', (req, res) => {
 
   const newContact = { ...req.body, id }
   contacts.push(newContact)
-  res.json({ newContact })
+  res.status(201).json({ newContact })
 })
 
 //
@@ -46,6 +46,17 @@ app.delete('/contacts/:id', (req, res) => {
   //   contacts = contacts.filter((singleContact) => singleContact.id !== contact.id)
   contacts.splice(contacts.indexOf(contact), 1)
   res.json({ contact })
+})
+
+app.put('/contacts/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const contact = contacts.find((singleContact) => singleContact.id === id)
+  contacts = contacts.map((singleContact) => {
+    if (singleContact.id === contact.id) {
+      return { ...req.body, id }
+    } else return singleContact
+  })
+  res.status(201).json({ contact })
 })
 
 module.exports = app

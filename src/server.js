@@ -1,7 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const contacts = require('../data/contacts')
+let contacts = require('../data/contacts')
 const { query } = require('express')
 const app = express()
 
@@ -25,11 +25,27 @@ app.get('/contacts/:id', (req, res) => {
   res.json({ contact })
 })
 
+// POST: creating a new contact and adding it to the initial contact data
 app.post('/contacts', (req, res) => {
-  const id = contacts.length + 1
+  let id
+  if (contacts.length === 0) {
+    id = 1
+  } else {
+    id = contacts[contacts.length - 1].id + 1
+  }
+
   const newContact = { ...req.body, id }
   contacts.push(newContact)
   res.json({ newContact })
+})
+
+//
+app.delete('/contacts/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const contact = contacts.find((singleContact) => singleContact.id === id)
+  //   contacts = contacts.filter((singleContact) => singleContact.id !== contact.id)
+  contacts.splice(contacts.indexOf(contact), 1)
+  res.json({ contact })
 })
 
 module.exports = app

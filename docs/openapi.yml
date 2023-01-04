@@ -119,8 +119,7 @@ paths:
                 properties:
                   meetings:
                     type: array
-                    items:
-                      $ref: '#/components/schemas/Meeting'
+                    $ref: '#/components/schemas/Meeting'
   /meetings/{id}:
     get:
       summary: Get a meeting by id
@@ -136,8 +135,7 @@ paths:
                 properties:
                   meeting:
                     type: object
-                    items:
-                      $ref: '#/components/schemas/Meeting'
+                    $ref: '#/components/schemas/Meeting'
     delete:
       summary: Delete a meeting by id
       tags:
@@ -152,8 +150,7 @@ paths:
                 properties:
                   meeting:
                     type: object
-                    items:
-                      $ref: '#/components/schemas/Meeting'
+                    $ref: '#/components/schemas/Meeting'
     put:
       summary: Update a meeting for a contact
       tags:

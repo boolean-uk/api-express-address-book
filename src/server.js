@@ -39,7 +39,7 @@ app.post('/contacts', (req, res) => {
   res.status(201).json({ newContact })
 })
 
-//
+// DELETE: contact by id
 app.delete('/contacts/:id', (req, res) => {
   const id = Number(req.params.id)
   const contact = contacts.find((singleContact) => singleContact.id === id)
@@ -48,6 +48,7 @@ app.delete('/contacts/:id', (req, res) => {
   res.json({ contact })
 })
 
+// PUT: changing an entire contact by contact id.
 app.put('/contacts/:id', (req, res) => {
   const id = Number(req.params.id)
   const contact = contacts.find((singleContact) => singleContact.id === id)

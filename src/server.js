@@ -85,8 +85,17 @@ app.get("/contacts/:id/meetings", (req, res) => {
 	const filteredMeetings = meetings.filter(
 		(meeting) => meeting.contactId === req.params.id
 	);
-
 	res.json({ meetings: filteredMeetings });
+});
+
+app.post("/contacts/:id/meetings", (req, res) => {
+	const contactId = req.params.id;
+	const meetingData = { ...req.body, id: meetings.length + 1, contactId };
+	meetings.push(meetingData);
+	console.log(meetingData);
+
+	console.log(req.params.id);
+	res.status(201).json({ meeting: meetingData });
 });
 
 module.exports = app;

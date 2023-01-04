@@ -4,7 +4,9 @@
   "description": "- Explain how to set up and run an Express application - Build a simple Express API and send a HTTP request to an available endpoint using a HTTP client - Explain that JSON is a widely-used language-agnostic format for encoding data as attribute value pairs - Diagram the request and response cycle for an Express API. - Use console.log() and read the result in the server logs",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon index.js"
+    "start": "npx nodemon ./src/index.js",
+    "test": "npx jest -i ./test/api/standard --forceExit",
+    "test-extensions": "npx jest -i ./test/api/extensions  --forceExit"
   },
   "repository": {
     "type": "git",

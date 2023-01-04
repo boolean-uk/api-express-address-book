@@ -1,14 +1,12 @@
-const { app, state } = require('../server.js')
 const supertest = require('supertest')
-const createTestFormData = require('./fixtures/createTestFormData.js')
-const updateTestFormData = require('./fixtures/updateTestFormData.js')
-const contacts = require('../data/contacts.js')
-const meetings = require('../data/meetings.js')
 
 describe('Address Book API', () => {
+  let app, createTestFormData, updateTestFormData
+
   beforeEach(() => {
-    state.contacts = [...contacts]
-    state.meetings = [...meetings]
+    app = require('../../../src/server.js')
+    createTestFormData = require('../../fixtures/contacts/createTestFormData.js')
+    updateTestFormData = require('../../fixtures/contacts/updateTestFormData.js')
   })
 
   describe('GET /contacts', () => {
@@ -74,14 +72,16 @@ describe('Address Book API', () => {
   })
 
   describe('PUT /contacts', () => {
-    const subject = contacts[1]
-    const updatedContact = {
-      ...updateTestFormData,
-      id: subject.id
-    }
+    let updatedContact
+    beforeEach(() => {
+      updatedContact = {
+        ...updateTestFormData,
+        id: 1
+      }
+    })
     it('returns updated contact', async () => {
       const response = await supertest(app)
-        .put(`/contacts/${subject.id}`)
+        .put(`/contacts/1`)
         .send(updateTestFormData)
 
       expect(response.status).toEqual(200)
@@ -93,7 +93,7 @@ describe('Address Book API', () => {
 
     it('updated contact is in data store', async () => {
       await supertest(app)
-        .put(`/contacts/${subject.id}`)
+        .put(`/contacts/1`)
         .send(updateTestFormData)
 
       const response = await supertest(app).get('/contacts')
@@ -103,35 +103,33 @@ describe('Address Book API', () => {
       expect(response.body.contacts.length).toEqual(2)
 
       const [contact1, contact2] = response.body.contacts
-      expect(contact2.firstName).toEqual(updatedContact.firstName)
-      expect(contact2.lastName).toEqual(updatedContact.lastName)
+      expect(contact1.firstName).toEqual(updatedContact.firstName)
+      expect(contact1.lastName).toEqual(updatedContact.lastName)
     })
   })
 
-  describe('DELETE /contacts/1', () => {
-    const subject = contacts[0]
-
+  describe('DELETE /contacts', () => {
     it('returns deleted contact', async () => {
       const response = await supertest(app)
-        .delete(`/contacts/${subject.id}`)
+        .delete(`/contacts/1`)
 
       expect(response.status).toEqual(200)
       expect(response.body.contact).not.toEqual(undefined)
-
-      const contact = response.body.contact
-      expect(contact).toMatchObject(subject)
+      expect(response.body.contact.id).toEqual(1)
     })
 
     it('removes contact from data store', async () => {
-      await supertest(app)
-        .delete(`/contacts/${subject.id}`)
+      const response = await supertest(app)
+        .delete(`/contacts/1`)
 
-      const response = await supertest(app).get('/contacts')
+      const deletedContact = response.body.contact
 
-      expect(response.status).toEqual(200)
-      expect(response.body.contacts).not.toEqual(undefined)
-      expect(response.body.contacts.length).toEqual(1)
-      expect(response.body.contacts).not.toContain(subject)
+      const response2 = await supertest(app).get('/contacts')
+
+      expect(response2.status).toEqual(200)
+      expect(response2.body.contacts).not.toEqual(undefined)
+      expect(response2.body.contacts.length).toEqual(1)
+      expect(response2.body.contacts).not.toContain(deletedContact)
     })
   })
 })

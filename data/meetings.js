@@ -2,17 +2,17 @@ const meetings = [
   {
     "name": "a test meeting about life",
     "contactId": "1",
-    "id": 2
+    "id": 1
   },
   {
     "name": "another test meeting for wondering about existence",
     "contactId": "2",
-    "id": 3
+    "id": 2
   },
   {
     "name": "a new meeting for the hopeful",
     "contactId": "1",
-    "id": 4
+    "id": 3
   }
 ]
 

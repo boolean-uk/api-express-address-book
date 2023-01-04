@@ -15,15 +15,34 @@ app.use(cors());
 //Tell express to parse JSON in the request body
 app.use(express.json());
 
-const contacts = require("../../api-sample-client/data/contacts");
+let contacts = require("../data/contacts");
 
+// add your routes here
 app.get("/contacts", (req, res) => {
-  res.json({ contacts: contacts });
+	res.json(contacts);
 });
 
 app.post("/contacts", (req, res) => {
-  res.json({});
+	const contactData = { ...req.body, id: contacts.length + 1 };
+	contacts.push(contactData);
+	res.status(201).json({ contact: contactData });
 });
 
-// add your routes here
+app.put("/contacts/:id", (req, res) => {
+	const contact = contacts.find((item) => item.id === Number(req.params.id));
+
+	contact.firstName = req.body.firstName;
+	contact.lastName = req.body.lastName;
+	contact.street = req.body.street;
+	contact.city = req.body.city;
+	contact.type = req.body.type;
+	contact.email = req.body.email;
+	contact.linkedin = req.body.linkedin;
+	contact.twitter = req.body.twitter;
+
+	console.log(contact);
+
+	res.json({ contact: contact });
+});
+
 module.exports = app;

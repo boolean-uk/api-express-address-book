@@ -95,4 +95,14 @@ app.put("/meetings/:id", (req, res) => {
   res.status(201).json({ meeting });
 });
 
+// GET
+// Get meetings for a specific contact
+app.get("/contacts/:id/meetings", (req, res) => {
+  const contactId = req.params.id;
+  const ctMeetings = meetings.filter(
+    (meeting) => meeting.contactId === contactId
+  );
+  res.json(ctMeetings);
+});
+
 module.exports = app;

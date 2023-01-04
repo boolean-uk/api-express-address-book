@@ -16,7 +16,7 @@ paths:
       responses:
         200:
           description: OK
-          content: 
+          content:
             application/json:
               schema:
                 type: object
@@ -38,7 +38,7 @@ paths:
       responses:
         201:
           description: OK
-          content: 
+          content:
             application/json:
               schema:
                 type: object
@@ -104,11 +104,82 @@ paths:
                   contact:
                     type: object
                     $ref: "#/components/schemas/Contact"
+  /meetings:
+    get:
+      summary: Retrieve a list of all meetings
+      tags:
+        - meetings
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meetings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Meeting'
+  /meetings/{id}:
+    get:
+      summary: Get a meeting by id
+      tags:
+        - meetings
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/Meeting'
+    delete:
+      summary: Delete a meeting by id
+      tags:
+        - meetings
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    items:
+                      $ref: '#/components/schemas/Meeting'
+    put:
+      summary: Update a meeting for a contact
+      tags:
+        - meetings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MeetingPostContact"
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meeting:
+                    type: object
+                    $ref: "#/components/schemas/Meeting"
   /contacts/{id}/meetings:
     get:
       summary: Get meetings for a specific contact
       tags:
-        - contacts
+        - meetings
       produces:
         - application/json
       responses:
@@ -126,7 +197,7 @@ paths:
     post:
       summary: Create a meeting for a contact
       tags:
-        - contacts
+        - meetings
       requestBody:
         required: true
         content:
@@ -136,7 +207,7 @@ paths:
       responses:
         201:
           description: OK
-          content: 
+          content:
             application/json:
               schema:
                 type: object
@@ -144,74 +215,12 @@ paths:
                   meeting:
                     type: object
                     $ref: "#/components/schemas/Meeting"
-  /contacts/{id}/meetings/{meetingId}:
-    put:
-      summary: Update a meeting for a contact
-      tags:
-        - contacts
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MeetingPostContact"
-      responses:
-        201:
-          description: OK
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  meeting:
-                    type: object
-                    $ref: "#/components/schemas/Meeting"
-  /meetings:
-    get:
-      summary: Retrieve a list of all meetings
-      tags:
-        - meetings
-      responses:
-        200:
-          description: OK
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  meetings:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Meeting'
-    post:
-      summary: Create a meeting
-      tags:
-        - meetings
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MeetingPost"
-      responses:
-        201:
-          description: OK
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  meeting:
-                    type: object
-                    $ref: "#/components/schemas/Meeting"
-
-
 components:
   schemas:
-    Contact: 
+    Contact:
       type: object
       properties:
-        id: 
+        id:
           type: integer
         firstName:
           type: string
@@ -219,7 +228,7 @@ components:
           type: string
         street:
           type: string
-        city: 
+        city:
           type: string
         type:
           type: string
@@ -233,7 +242,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Meeting'
-    ContactPost: 
+    ContactPost:
       type: object
       properties:
         firstName:
@@ -242,7 +251,7 @@ components:
           type: string
         street:
           type: string
-        city: 
+        city:
           type: string
         type:
           type: string
@@ -252,10 +261,10 @@ components:
           type: string
         twitter:
           type: string
-    Meeting: 
+    Meeting:
       type: object
       properties:
-        id: 
+        id:
           type: integer
         contactId:
           type: integer

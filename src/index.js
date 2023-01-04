@@ -48,7 +48,13 @@ app.get("/contacts/:id", (req, res) => {
   console.log(req.params.id, "hi");
 });
 // Delete a single contact by ID
+app.delete("/contacts/:id", (req, res) => {
+  const paramID = Number(req.params.id);
 
+  const indexContact = contacts.contacts.findIndex((contact) => contact.id === paramID);
+  contacts.contacts.splice(indexContact, 1)
+  res.json(contacts);
+});
 
 
 //Start up our server

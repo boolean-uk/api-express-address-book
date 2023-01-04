@@ -51,11 +51,30 @@ app.get("/contacts/:id", (req, res) => {
 app.delete("/contacts/:id", (req, res) => {
   const paramID = Number(req.params.id);
 
-  const indexContact = contacts.contacts.findIndex((contact) => contact.id === paramID);
-  contacts.contacts.splice(indexContact, 1)
+  const indexContact = contacts.contacts.findIndex(
+    (contact) => contact.id === paramID
+  );
+  contacts.contacts.splice(indexContact, 1);
   res.json(contacts);
 });
 
+// update contact byID
+app.put("/contacts/:id", (req, res) => {
+  const paramId = Number(req.params.id);
+  // console.log(req.body)
+  const reqBody = req.body
+  reqBody.id = paramId
+
+  contacts.contacts.map((contact) => {
+    if (contact.id === paramId){
+      console.log(reqBody)
+      contact = reqBody
+    }
+  });
+  console.log();
+
+  res.json(contacts);
+});
 
 //Start up our server
 const port = 3030;

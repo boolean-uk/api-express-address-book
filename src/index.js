@@ -19,6 +19,7 @@ const contacts = require("../data/contacts.json");
 const meetings = require("../data/meetings.json");
 
 // add your routes here
+// retrieve all contacts
 app.get("/contacts", (req, res) => {
   res.json(contacts);
 });
@@ -37,6 +38,7 @@ app.post("/contacts", (req, res) => {
   // console.log(contacts, " contacts");
   res.json(contacts);
 });
+
 // get single contact by ID
 app.get("/contacts/:id", (req, res) => {
   const paramID = Number(req.params.id);
@@ -47,6 +49,7 @@ app.get("/contacts/:id", (req, res) => {
   res.json(chosenId);
   console.log(req.params.id, "hi");
 });
+
 // Delete a single contact by ID
 app.delete("/contacts/:id", (req, res) => {
   const paramID = Number(req.params.id);
@@ -62,19 +65,55 @@ app.delete("/contacts/:id", (req, res) => {
 app.put("/contacts/:id", (req, res) => {
   const paramId = Number(req.params.id);
   // console.log(req.body)
-  const reqBody = req.body
-  reqBody.id = paramId
+  const reqBody = req.body;
+  reqBody.id = paramId;
 
   contacts.contacts.map((contact) => {
-    if (contact.id === paramId){
-      console.log(reqBody)
-      contact = reqBody
+    if (contact.id === paramId) {
+      console.log(reqBody);
+      contact = reqBody;
     }
   });
   console.log();
 
   res.json(contacts);
 });
+
+// Retrieve a list of all meetings
+
+app.get("/meetings", (req, res) => {
+  res.json(meetings);
+});
+
+// Get a meeting by id
+app.get("/meetings/:id", (req, res) => {
+  const paramId = Number(req.params.id);
+  chosenId = meetings.meetings.find((meeting) => meeting.id !== paramId);
+  res.json(chosenId);
+});
+
+// Delete a meeting by id
+
+app.delete("/meetings/:id", (req, res)=>{
+  const paramId = Number(req.params.id)
+  const filter = meetings.meetings.filter((meeting)=>meeting.id!==paramId)
+  res.json(filter)
+})
+
+// Update a meeting for a contact
+
+app.put("/meetings/:id", (req, res)=>{
+  const paramId = Number(req.params.id);
+  const updateById = req.body
+  updateById.id = paramId
+  meetings.meetings.map((meeting)=>{
+    if(meeting.id===paramId){
+      meeting = updateById
+    }
+  })
+  console.log(updateById)
+  res.json(meetings)
+}) 
 
 //Start up our server
 const port = 3030;

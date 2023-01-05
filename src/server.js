@@ -13,13 +13,13 @@ let idCount = 2;
 let meetingIdCount = 0
 
 app.get("/contacts", (req, res) => {
-  res.json(contacts);
+  res.json({contacts: contacts});
 });
 
 app.get("/contacts/:id", (req, res) => {
     const id = Number(req.params.id)
     const contact = contacts.find(contact => contact.id === id)
-    res.json(contact)
+    res.json({contact: contact})
 })
 
 app.post("/contacts", (req, res) => {
@@ -27,7 +27,7 @@ app.post("/contacts", (req, res) => {
   const contact = { id: idCount, ...req.body };
   contact.id = idCount;
   contacts.push(contact);
-  res.json(contacts);
+  res.json({contacts: contacts});
 });
 
 app.delete("/contacts/:id", (req, res) => {
@@ -35,24 +35,24 @@ app.delete("/contacts/:id", (req, res) => {
   const contact = contacts.find((contact) => contact.id === id);
   const index = contacts.indexOf(contact);
   contacts.splice(index, 1);
-  res.json(contacts);
+  res.json({contact: contact});
 });
 
 app.patch("/contacts/:id", (req, res) => {
   const id = Number(req.params.id);
   const contact = contacts.find((item) => item.id === id);
   Object.assign(contact, req.body);
-  res.json(contact);
+  res.json({contact: contact});
 });
 
 app.get("/meetings", (req, res) => {
-    res.json(meetings)
+    res.json({meetings: meetings})
 })
 
 app.get("/meetings/:id", (req, res) => {
     const id = Number(req.params.id)
     const meeting = meetings.find(meeting => meeting.id === id)
-    res.json(meeting)
+    res.json({meeting: meeting})
 })
 
 app.delete("/meetings/:id", (req, res) => {

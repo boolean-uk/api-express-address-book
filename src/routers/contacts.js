@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const contacts = require("../../data/contacts.js");
+const meetings = require("../../data/meetings.js");
 //get all contacts
 router.get("/", (req, res) => {
   res.json({ contacts: contacts });
@@ -33,5 +34,23 @@ router.put("/:id", (req, res) => {
 
   Object.keys(req.body).forEach((prop) => (contact[prop] = req.body[prop]));
   res.json({ contact: contact });
+});
+//get meetings for specific contact
+router.get("/:id/meetings", (req, res) => {
+  const contactMeetings = meetings.filter(
+    (meeting) => meeting.contactId === req.params.id
+  );
+  res.json({ meetings: contactMeetings });
+});
+
+router.post("/:id/meetings", (req, res) => {
+  const meeting = {
+    ...req.body,
+    id: meetings.length + 1,
+    contactId: req.params.id,
+  };
+  meeting.contactId = Number(meeting.contactId);
+  meetings.push(meeting);
+  res.json({ meeting: meeting });
 });
 module.exports = router;

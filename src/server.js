@@ -66,5 +66,8 @@ app.put("/contacts/:id", (req, res) => {
 //res.json({ contact: contact });
 //});
 const contactsRouter = require("./routers/contacts.js");
+const meetingsRouter = require("./routers/meetings.js");
 app.use("/contacts", contactsRouter);
+app.use("/meetings", meetingsRouter);
+
 module.exports = app;

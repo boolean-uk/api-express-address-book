@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
   const newContact = { ...req.body, id }
   contacts.push(newContact)
-  res.status(201).json({ newContact })
+  res.status(200).json({ contact: newContact })
 })
 
 // DELETE: contact by id
@@ -43,12 +43,14 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const id = Number(req.params.id)
   const contact = contacts.find((singleContact) => singleContact.id === id)
-  contacts = contacts.map((singleContact) => {
-    if (singleContact.id === contact.id) {
-      return { ...req.body, id }
-    } else return singleContact
-  })
-  res.status(201).json({ contact })
+  // contacts = contacts.map((singleContact) => {
+  //   if (singleContact.id === contact.id) {
+  //     return { ...req.body, id }
+  //   } else return singleContact
+  // })
+  // see above : The code was causing a failure. see below for solution.
+  Object.keys(req.body).forEach((prop) => (contact[prop] = req.body[prop]))
+  res.json({ contact: contact })
 })
 
 // GET

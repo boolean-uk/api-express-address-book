@@ -8,6 +8,8 @@ router.get("/", (req, res) => {
 // get meeting by id
 router.get("/:id", (req, res) => {
   const meeting = meetings.find((item) => item.id === Number(req.params.id));
+  const contactId = meeting.contactId;
+
   res.json({ meeting: meeting });
 });
 //delete a meeting
@@ -21,8 +23,9 @@ router.delete("/:id", (req, res) => {
 //update a meeting
 router.put("/:id", (req, res) => {
   const meeting = meetings.find((item) => item.id === Number(req.params.id));
+
   meeting.name = req.body.name;
-  meeting.contactId = Number(meeting.contactId);
+  //meeting.contactId = Number(meeting.contactId);
 
   res.json({ meeting: meeting });
 });

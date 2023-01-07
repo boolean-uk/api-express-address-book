@@ -22,6 +22,11 @@ router.post("/", (req, res) => {
 router.delete("/:id", (req, res) => {
   const contact = contacts.find((item) => item.id === Number(req.params.id));
   const index = contacts.indexOf(contact);
+  const updatedMeetings = meetings.filter(
+    (meeting) => meeting.contactId === Number(req.params.id)
+  );
+  meetings.splice(0, meetings.length);
+  meetings.push(updatedMeetings);
 
   contacts.splice(index, 1);
   res.json({ contact: contact });
@@ -49,7 +54,7 @@ router.post("/:id/meetings", (req, res) => {
     id: meetings.length + 1,
     contactId: req.params.id,
   };
-  meeting.contactId = Number(meeting.contactId);
+  // meeting.contactId = Number(meeting.contactId);
   meetings.push(meeting);
   res.json({ meeting: meeting });
 });

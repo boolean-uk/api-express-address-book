@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
   const contact = { id: idCount, ...req.body };
   contact.id = idCount;
   contacts.push(contact);
-  res.json({ contacts: contacts });
+  res.json({ contact });
 });
 
 router.delete("/:id", (req, res) => {
@@ -32,7 +32,7 @@ router.delete("/:id", (req, res) => {
   res.json({ contact: contact });
 });
 
-router.patch("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const id = Number(req.params.id);
   const contact = contacts.find((item) => item.id === id);
   Object.assign(contact, req.body);

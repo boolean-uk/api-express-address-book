@@ -19,9 +19,9 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   idCount += 1;
   const contact = { id: idCount, ...req.body };
-  contact.id = idCount;
+  contact.meetings = [];
   contacts.push(contact);
-  res.json({ contacts: contacts });
+  res.json({ contact: contact });
 });
 
 router.delete("/:id", (req, res) => {

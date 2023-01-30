@@ -32,13 +32,14 @@ router.delete("/:id", (req, res) => {
   res.json({ contact: contact });
 });
 
-router.patch("/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const id = Number(req.params.id);
   const contact = contacts.find((item) => item.id === id);
   Object.assign(contact, req.body);
   res.json({ contact: contact });
 });
 
+// MEETINGS
 router.get("/:id/meetings", (req, res) => {
   const id = req.params.id;
   contactMeetings = meetings.filter((m) => m.contactId === id);

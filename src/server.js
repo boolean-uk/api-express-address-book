@@ -76,7 +76,7 @@ app.get("/meetings/:id", (req, res) => {
   const id = Number(req.params.id);
   const meeting = meetings.find((meet) => meet.id === id);
 
-  res.json({ meeting });
+  res.json({ meeting: meeting });
 });
 
 // Delete meeting by ID
@@ -84,20 +84,16 @@ app.delete("/meetings/:id", (req, res) => {
   const id = Number(req.params.id);
   const meeting = meetings.find((meet) => meet.id === id);
   meetings.splice(meetings.indexOf(meeting), 1);
-  res.json({ meeting });
+  res.json({ meeting: meeting });
 });
 
 // Update meeting by ID
 app.put("/meetings/:id", (req, res) => {
   const id = Number(req.params.id);
   const meeting = meetings.find((meet) => meet.id === id);
-  meetings = meetings.map((meet) => {
-    const { contactId } = meet;
-    if (meet.id === meeting.id) {
-      return { ...req.body, id, contactId };
-    } else return meet;
-  });
-  res.status(201).json({ meeting });
+  meeting.name = req.body.name;
+  meeting.contactId = Number(meeting.contactId);
+  res.json({ meeting: meeting });
 });
 
 // Get meetings for a specific contact
@@ -113,17 +109,17 @@ app.get("/contacts/:id/meetings", (req, res) => {
 app.post("/contacts/:id/meetings", (req, res) => {
   let id;
 
-  if (contacts.length === 0) {
+  if (meetings.length === 0) {
     id = 1;
   } else {
-    id = contacts[contacts.length - 1].id + 1;
+    id = meetings[meetings.length - 1].id + 1;
   }
-  let contactId = req.params.id;
+  let contactId = Number(req.params.id);
   let meeting = meetings.filter((meetings) => meetings.contactId === contactId);
   meeting = { ...req.body, contactId, id };
   // const newContact = { ...req.body, id };
   meetings.push(meeting);
-  res.status(201).json({ meetings: meeting });
+  res.status(200).json({ meeting: meeting });
 });
 
 module.exports = app;

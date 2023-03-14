@@ -43,7 +43,9 @@ app.delete("/contacts/:id", (req, res) => {
   const newMeetings = meetings.filter(
     (item) => item.contactId === Number(req.params.id)
   );
+  // Remove all meetings
   meetings.splice(0, meetings.length);
+  // Push new meetings into meetings
   meetings.push(newMeetings);
 
   res.json({ contact });

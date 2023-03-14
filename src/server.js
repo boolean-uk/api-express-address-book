@@ -24,7 +24,7 @@ app.post("/contacts", (req, res) => {
   contactReq.id = lastUsedContactId;
   contacts.push(contactReq);
   console.log("Over here --> ", contactReq);
-  res.json({ contact: contactReq });
+  res.status(201).json({ contact: contactReq });
 });
 
 // GET - Get a single contact by ID
@@ -113,6 +113,6 @@ app.post("/contacts/:id/meetings", (req, res) => {
   meetingReq.id = lastUsedMeetingId;
 
   meetings.push(meetingReq);
-  res.json({ meeting: meetingReq });
+  res.status(201).json({ meeting: meetingReq });
 });
 module.exports = app;

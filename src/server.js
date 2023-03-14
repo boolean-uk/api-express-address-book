@@ -17,7 +17,7 @@ app.get("/contacts", (req, res) => {
 
 app.post("/contacts", (req, res) => {
   const newContact = req.body;
-  newContact.id = contacts.length;
+  newContact.id = contacts[contacts.length - 1] + 1;
   contacts.push(newContact);
   res.status(201).json({ newContact });
 });

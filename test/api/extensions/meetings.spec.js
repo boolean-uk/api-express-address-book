@@ -68,7 +68,7 @@ describe('Address Book API', () => {
           .put('/meetings/1')
           .send(createTestFormData)
 
-        const responseAfter = await supertest(app).get('/meetings/1')
+        const response = await supertest(app).get('/meetings/1')
 
         expect(response.status).toEqual(200)
         expect(response.body.meeting).not.toEqual(undefined)

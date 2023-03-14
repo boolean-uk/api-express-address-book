@@ -94,7 +94,7 @@ paths:
             schema:
               $ref: "#/components/schemas/ContactPost"
       responses:
-        201:
+        200:
           description: OK
           content:
             application/json:
@@ -163,7 +163,7 @@ paths:
             schema:
               $ref: "#/components/schemas/MeetingPostContact"
       responses:
-        201:
+        200:
           description: OK
           content:
             application/json:

@@ -66,11 +66,11 @@ describe("Address Book API", () => {
       it("datastore is updated with meeting", async () => {
         await supertest(app).put("/meetings/1").send(createTestFormData);
 
-        const responseAfter = await supertest(app).get("/meetings/1");
+        const response = await supertest(app).get("/meetings/1");
 
-        expect(responseAfter.status).toEqual(200);
-        expect(responseAfter.body.meeting).not.toEqual(undefined);
-        expect(responseAfter.body.meeting).toMatchObject({
+        expect(response.status).toEqual(200);
+        expect(response.body.meeting).not.toEqual(undefined);
+        expect(response.body.meeting).toMatchObject({
           name: "best meeting ever",
           contactId: "1",
           id: 1,

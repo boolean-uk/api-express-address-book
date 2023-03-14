@@ -30,7 +30,7 @@ app.post("/contacts", (req, res) => {
 
 app.put("/contacts/:id", (req, res) => {
   const contact = contacts.find((item) => item.id === Number(req.params.id));
-  Object.keys(req.body).forEach((prop) => (contact[prop] = req.body[prop]));
+  Object.keys(req.body).forEach((item) => (contact[item] = req.body[item]));
 
   res.status(200).json({ contact: contact });
 });

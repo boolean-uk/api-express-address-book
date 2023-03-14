@@ -71,8 +71,7 @@ app.put("/meetings/:id", (req, res) => {
 
 app.delete("/meetings/:id", (req, res) => {
   const meeting = meetings.find((item) => item.id === Number(req.params.id));
-  const index = meetings.indexOf(meeting);
-  meetings.splice(index, 1);
+  meetings.splice(meetings.indexOf(meeting), 1);
 
   res.json({ meeting: meeting });
 });

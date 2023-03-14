@@ -29,21 +29,27 @@ app.post('/contacts', (req, res) => {
     contactId++
     createTestFormData.id = contactId
     contacts.push(createTestFormData)
-    res.status(201).json({contacts})
+    res.send({contact: createTestFormData})
 })
 
 app.delete('/contacts/:id', (req, res) => {
     const id = Number(req.params.id)
     const contact = contacts.find((person) => person.id === id)
+    contacts.splice(contacts.contact , 1)
     res.json({contact})
 })
 
 app.put('/contacts/:id', (req, res) => {
     const contact = contacts.find((person) => person.id === Number(req.params.id))
-   
+    
     updatetedContact = {...updateTestFormData,
-    id: contact.id}  
-    res.send({updatedContact})
+    id: contact.id,
+    firstName: req.body.firstName}  
+
+    console.log("req.body", req.body)
+    console.log("updated" , updatetedContact)
+    
+    res.send({contact: updatetedContact})
 })
 
 module.exports = app

@@ -11,8 +11,7 @@ app.use(express.json());
 let contactId = 2;
 
 const contacts = require("../data/contacts");
-const createTestFormData = require("../test/fixtures/contacts/createTestFormData");
-const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData");
+
 
 app.get("/contacts", (req, res) => {
   res.json({ contacts });
@@ -24,36 +23,33 @@ app.get("/contacts/:id", (req, res) => {
   res.json({ contact });
 });
 
-app.post("/contacts", (req, res) => {
-  contactId++;
-  createTestFormData.id = contactId;
-  contacts.push(createTestFormData);
-  res.status(201).json({ contacts });
-});
+// app.post("/contacts", (req, res) => {
+//   contactId++;
+//   createTestFormData.id = contactId;
+//   contacts.push(createTestFormData);
+//   res.status(201).json({ contacts });
+// });
 
 app.post('/contacts', (req, res) => {
     contactId++
     createTestFormData.id = contactId
     contacts.push(createTestFormData)
-    res.send({contact: createTestFormData})
+    res.status(201).json({contact: createTestFormData})
 })
 
 app.delete('/contacts/:id', (req, res) => {
     const id = Number(req.params.id)
-    const contact = contacts.find((person) => person.id === id)
-    contacts.splice(contacts.contact , 1)
+    const index = contacts.findIndex((person) => person.id === id)
+    const contact = contacts.splice(index, 1)[0]
     res.json({contact})
 })
 
 app.put('/contacts/:id', (req, res) => {
     const contact = contacts.find((person) => person.id === Number(req.params.id))
-    
-    updatetedContact = {...updateTestFormData,
-    id: contact.id,
-    firstName: req.body.firstName}  
+    console.log("updated" , contact)
+    const updatetedContact = {...contact, ...req.body}  
 
     console.log("req.body", req.body)
-    console.log("updated" , updatetedContact)
     
     res.send({contact: updatetedContact})
 })

@@ -15,4 +15,11 @@ app.get("/contacts", (req, res) => {
   res.status(200).json({ contacts });
 });
 
+app.post("/contacts", (req, res) => {
+  const newContact = req.body;
+  newContact.id = contacts.length;
+  contacts.push(newContact);
+  res.status(201).json({ newContact });
+});
+
 module.exports = app;

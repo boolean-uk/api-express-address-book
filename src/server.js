@@ -1,29 +1,35 @@
-const express = require("express")
-const morgan = require("morgan")
-const cors = require("cors")
-const app = express()
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const app = express();
 
-app.use(morgan("dev"))
-app.use(cors())
-app.use(express.json())
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
 
 // write your app code here
-let contactId = 2
+let contactId = 2;
 
-const contacts =require('../data/contacts')
-const createTestFormData = require("../test/fixtures/contacts/createTestFormData")
-const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData")
+const contacts = require("../data/contacts");
+const createTestFormData = require("../test/fixtures/contacts/createTestFormData");
+const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData");
 
-app.get('/contacts', (req, res) => {
-    res.json({contacts})
-})
+app.get("/contacts", (req, res) => {
+  res.json({ contacts });
+});
 
-app.get('/contacts/:id', (req, res) => {
-    const id = Number(req.params.id)
-    const contact = contacts.find((person) => person.id === id)
-    res.json({contact})
-})
+app.get("/contacts/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const contact = contacts.find((person) => person.id === id);
+  res.json({ contact });
+});
 
+app.post("/contacts", (req, res) => {
+  contactId++;
+  createTestFormData.id = contactId;
+  contacts.push(createTestFormData);
+  res.status(201).json({ contacts });
+});
 
 app.post('/contacts', (req, res) => {
     contactId++
@@ -52,4 +58,4 @@ app.put('/contacts/:id', (req, res) => {
     res.send({contact: updatetedContact})
 })
 
-module.exports = app
+module.exports = app;

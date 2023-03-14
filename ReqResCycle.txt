@@ -1,0 +1,10 @@
+App.js:17
+|
+v
+client.js:3
+|
+v
+GET @ http://localhost:3030/contacts
+|
+v
+RES {contacts: [{...}, {...}]}

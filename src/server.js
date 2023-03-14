@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const contacts = require("../data/contacts");
+const meetings = require("../data/meetings");
 let lastUsedId = 2;
 
 // GET - Retrieve a list of contacts
@@ -32,11 +33,21 @@ app.get("/contacts/:id", (req, res) => {
   res.json({ contact });
 });
 
-// DELETE - Delete a single contact by ID
+// DELETE - Delete a single contact by ID and all its meetings
 app.delete("/contacts/:id", (req, res) => {
   const contact = contacts.find((contact) => contact.id == req.params.id);
   console.log("DEL Contact --> ", contact);
   contacts.splice(contacts.indexOf(contact), 1);
+
+  const findMeetings = meetings.filter(
+    (meeting) => meeting.contactId == contact.id
+  );
+
+  if (findMeetings) {
+    findMeetings.forEach((meeting) => {
+      meetings.splice(meetings.indexOf(meeting), 1);
+    });
+  }
   res.json({ contact });
 });
 
@@ -49,6 +60,27 @@ app.put("/contacts/:id", (req, res) => {
   res.json({ contact: contactReq });
 });
 
-// TODO: EXTENSIONS
+// EXTENSIONS
 
+// GET - Retrieve a list of all meetings
+app.get("/meetings", (req, res) => {
+  res.json({ meetings });
+});
+
+// GET - Get a meeting by ID
+app.get("/meetings/:id", (req, res) => {
+  const meeting = meetings.find((meeting) => meeting.id == req.params.id);
+  console.log("Meeting by ID --> ", meeting);
+  res.json({ meeting });
+});
+
+// DELETE - Delete a meeting by ID
+app.delete("/meetings/:id", (req, res) => {
+  const meeting = meetings.find((meeting) => meeting.id == req.params.id);
+  console.log("DEL Meeting --> ", meeting);
+  meetings.splice(meetings.indexOf(meeting), 1);
+  res.json({ meeting });
+});
+
+// TODO: PUT - Update a meeting for a contact
 module.exports = app;

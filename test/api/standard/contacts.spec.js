@@ -45,7 +45,7 @@ describe('Address Book API', () => {
         .post('/contacts')
         .send(createTestFormData)
 
-      expect(response.status).toEqual(200)
+      expect(response.status).toEqual(201)
       expect(response.body.contact).not.toEqual(undefined)
 
       const contact = response.body.contact

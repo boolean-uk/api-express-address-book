@@ -10,6 +10,7 @@ app.use(express.json());
 // write your app code here
 
 const contacts = require("../data/contacts.js");
+const meetings = require("../data/meetings.js");
 
 app.get("/contacts", (req, res) => {
   res.status(200).json({ contacts });
@@ -17,9 +18,10 @@ app.get("/contacts", (req, res) => {
 
 app.post("/contacts", (req, res) => {
   const newContact = req.body;
-  newContact.id = contacts[contacts.length - 1] + 1;
+  newContact.id = contacts[contacts.length - 1].id + 1;
   contacts.push(newContact);
-  res.status(201).json({ newContact });
+  const contact = newContact;
+  res.json({ contact });
 });
 
 app.get("/contacts/:id", (req, res) => {
@@ -33,18 +35,18 @@ app.delete("/contacts/:id", (req, res) => {
   const deletedContact = contacts.find((item) => item.id === id);
   const contactIndex = contacts.findIndex((contact) => (contact.id = id));
   contacts.splice(contactIndex, 1);
-
-  const filteredMeetings = meetings.filter(
-    (meeting) => meeting.contactId === id
-  );
+  
+  const filteredMeetings = meetings.filter((meeting) =>  {
+    return meeting.contactId === id;
+  });
 
   filteredMeetings.forEach((meeting) => {
     const id = meeting.id;
     const meetingIndex = meetings.findIndex((meeting) => meeting.id === id);
     meetings.splice(meetingIndex, 1);
   });
-
-  res.status(200).json({ deletedContact });
+  const contact = deletedContact;
+  res.status(200).json({contact});
 });
 
 app.put("/contacts/:id", (req, res) => {

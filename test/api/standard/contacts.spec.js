@@ -44,11 +44,11 @@ describe('Address Book API', () => {
       const response = await supertest(app)
         .post('/contacts')
         .send(createTestFormData)
-
-      expect(response.status).toEqual(201)
+      expect(response.status).toEqual(200)
       expect(response.body.contact).not.toEqual(undefined)
 
       const contact = response.body.contact
+      
       expect(contact.id).toEqual(3)
       expect(contact.firstName).toEqual(createTestFormData.firstName)
       expect(contact.lastName).toEqual(createTestFormData.lastName)

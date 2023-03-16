@@ -149,7 +149,7 @@ describe('Address Book API', () => {
         .post('/contacts/1/meetings')
         .send(createTestFormData)
 
-      expect(response.status).toEqual(200)
+      expect(response.status).toEqual(201)
       expect(response.body.meeting).not.toEqual(undefined)
 
       const meeting = response.body.meeting

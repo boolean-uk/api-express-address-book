@@ -60,5 +60,15 @@ app.delete('/contacts/:id', (req, res) => {
     contacts.splice(indexNum, 1)
     return res.status(200).send({contact: contactById})
 })
+app.put('/contacts/:id', (req, res) => {
+    const idNum = Number(req.params.id)
+    const contactById = contacts.findIndex((contact) =>{
+        return contact.id === idNum
+    })
+    contacts[contactById].firstName = "UPDATED"
+    contacts[contactById].lastName = "UPDATED"
+    console.log("contact", contacts[contactById]);
+    return res.status(200).send({updatedContact: contacts[contactById]})
+})
 
 module.exports = app

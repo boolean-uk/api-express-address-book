@@ -37,8 +37,9 @@ let id = 3;
 const findById = (id) => {
   return contacts.find((item) => item.id === id);
 };
+
 app.get("/contacts", (req, res) => {
-  return res.send(contacts);
+  return res.send({contacts});
 });
 
 app.post("/contacts", (req, res) => {

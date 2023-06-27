@@ -65,15 +65,10 @@ app.put('/contacts/:id', (req, res) => {
     const contactById = contacts.findIndex((contact) =>{
         return contact.id === idNum
     })
-    const contact = req.body    
-    contacts[contactById].firstName = contact.firstName
-    contacts[contactById].lastName = contact.lastName ? contact.lastName : contacts[contactById].lastName
-    contacts[contactById].city = contact.city ? contact.city : contacts[contactById].city
-    contacts[contactById].email = contact.email ? contact.email : contacts[contactById].email
-    contacts[contactById].linkedin = contact.linkedin ? contact.linkedin : contacts[contactById].linkedin
-    contacts[contactById].street = contact.street ? contact.street : contacts[contactById].street
-    contacts[contactById].twitter = contact.twitter ? contact.twitter : contacts[contactById].twitter
-    contacts[contactById].type = contact.type ? contact.type : contacts[contactById].type
+    const contact = req.body   
+    contact.id = idNum 
+    contacts[contactById] = contact
+
     return res.status(200).send({contact: contacts[contactById]})
 })
 

@@ -9,26 +9,46 @@ app.use(express.json())
 
 // write your app code here
 
+
+
 const contacts = {
     contacts: [
-        {
-            id: 0,
-            firstName: "Marc",
-            lastName: "Alzapiedi",
-            street: "Strada Albareto 397",
-            city: "Modena",
-            type: "Personal",
-            email: "marcalzapiedi@gmail.com",
-            linkedin: "https://www.linkedin.com/mynetwork/",
-            twitter: "https://www.don'thavetwitter.com",
-            meetings: [
-                {
-                    id: 0,
-                    contactId: 0,
-                    name: "name"
-                }
-            ]
-        }
+      {
+        id: 1,
+        firstName: "John",
+        lastName: "Carmack",
+        street: "34 Crescent place",
+        city: "Hartford",
+        type: "Personal",
+        email: "john@yahoo.com",
+        linkedin: "https://boolean-uk.github.io/api-express-address-book/#tag/contacts/paths/~1contacts/get",
+        twitter: "https://boolean-uk.github.io/api-express-address-book/#tag/contacts/paths/~1contacts/get",
+        meetings: [
+            {
+                id: 1,
+                contactId: 1,
+                name: "string"
+            }
+        ]
+      },
+      {
+        id: 2,
+        firstName: "Grace",
+        lastName: "Hopper",
+        street: "55 Dorothy Drive",
+        city: "Monroe",
+        type: "Personal",
+        email: "grace@yahoo.com",
+        linkedin: "https://boolean-uk.github.io/api-express-address-book/#tag/contacts/paths/~1contacts/get",
+        twitter: "https://boolean-uk.github.io/api-express-address-book/#tag/contacts/paths/~1contacts/get",
+        meetings: [
+            {
+                id: 2,
+                contactId: 2,
+                name: "string"
+            }
+        ]
+      }
     ]
 }
 
@@ -39,9 +59,11 @@ app.get('/contacts', (req, res) => {
 
 app.post('/contacts', (req, res) => {
     console.log(req.body)
-    const contact = req.body
+    let contact = req.body
+    contact = {id: contacts.contacts.length + 1, ...contact}
+
     contacts.contacts.push(contact)
-    return res.status(201).send(contact)
+    return res.status(201).send({contact: contact})
 })
 
 app.get('/contacts/:id', (req, res) => {
@@ -58,7 +80,7 @@ app.get('/contacts/:id', (req, res) => {
     if (arr[0] === undefined) {
         return res.status(404).send(`No such id as: ${req.params.id}`)
     }
-    return res.send(arr[0])
+    return res.send({contact: arr[0]})
 
 })
 
@@ -67,11 +89,12 @@ app.delete('/contacts/:id', (req, res) => {
         
         return obj.id === req.params.id / '1'
     })
-    contacts.contacts.splice(contacts.contacts.indexOf(arr[0]), 1)
+    const deleted = contacts.contacts.splice(contacts.contacts.indexOf(arr[0]), 1)
+    console.log(arr)
     if (arr[0] === undefined) {
         return res.status(404).send(`No such id as: ${req.params.id}`)
     }
-    return res.send(contacts)
+    return res.send({contact: deleted[0]})
 })
 
 app.put('/contacts/:id', (req, res) => {

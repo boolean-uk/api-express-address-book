@@ -26,7 +26,7 @@ app.get("/contacts/:id", (req, res) => {
   const id = req.params.id;
   const contact = contacts.find((contact) => contact.id === Number(id));
 
-  return res.status(200).send(contact);
+  return res.send( {contact} );
 });
 
 // Delete a single contact by id
@@ -36,7 +36,7 @@ app.delete("/contacts/:id", (req, res) => {
   const contactIndex = contacts.indexOf(deletedContact);
   contacts.splice(contactIndex, 1);
 //   return res.send({ contacts: contactIndex });
-  return res.status(200).send(deletedContact);
+  return res.status(200).send( {contact: deletedContact} );
 });
 
 module.exports = app;

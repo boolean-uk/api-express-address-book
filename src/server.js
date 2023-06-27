@@ -46,4 +46,14 @@ app.delete("/contacts/:id", (req, res) => {
   return res.status(200).send( {contact: deletedContact} );
 });
 
+// Update contact by id
+app.put("/contacts/:id", (req, res) => {
+    const id = req.params.id;
+    const deletedContact =  contacts.find((contact) => contact.id === Number(id))
+    const contactIndex = contacts.indexOf(deletedContact);
+    contacts.splice(contactIndex, 2);
+    const newContact = { id: Number(id), ...req.body };
+return res.status(200).send( {contact: newContact})
+})
+
 module.exports = app;

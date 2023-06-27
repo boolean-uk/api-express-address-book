@@ -76,9 +76,17 @@ app.delete('/contacts/:id', (req, res) => {
 app.put('/contacts/:id', (req, res) => {
 
   const idStore = Number(req.params.id)
-  const searchResult = contacts.find(contact => {
+  const searchResult = contacts.findIndex(contact => {
+    return contact.id === idStore
+}) 
 
-  })
+  const contact = req.body
+
+  contact.id = idStore
+
+  contacts[searchResult] = contact
+
+  return res.status(200).send({contact: contact })
 })
 
 module.exports = app

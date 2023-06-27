@@ -74,7 +74,7 @@ describe('Address Book API', () => {
         expect(response.body.meeting).not.toEqual(undefined)
         expect(response.body.meeting).toMatchObject({
           "name": 'best meeting ever',
-          "contactId": "1",
+          "contactId": 1,
           "id": 1
         })
       })

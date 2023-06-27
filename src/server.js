@@ -122,25 +122,5 @@ app.put('/meetings/:id', (req, res) => {
   return res.send({ meeting: updatedMeeting })
   }
 })
-// Update a contact by ID
-app.put("/contacts/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const body = req.body;
-  const contact = contacts.find((contact) => {
-    return contact.id === id;
-  });
-  const updateContact = {...body, id: id }
-  const contactIndex = contacts.findIndex((item) => {
-      return item === contact;
-    });
-  if (contact) {
-      contacts.splice(contactIndex, 1, updateContact)
-    return res.send({ contact: updateContact });
-  }
-  else {
-    return res.send("No Contact Found");
-  }
-});
-
 
 module.exports = app;

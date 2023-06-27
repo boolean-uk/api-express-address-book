@@ -128,4 +128,17 @@ app.put("/meetings/:id", (req, res) => {
   }
 });
 
+app.get('/contacts/:id/meetings', (req, res) => {
+  const contactMeetings = []
+  const id = req.params.id
+
+  for (i = 0; i < meetings.length; i++) {
+    if (meetings[i].contactId === id) {
+      contactMeetings.push(meetings[i])
+    }
+  }
+
+  return res.send({ meetings: contactMeetings })
+})
+
 module.exports = app;

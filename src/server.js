@@ -27,7 +27,7 @@ app.post("/contacts", (req, res) => {
 // Get contact by ID
 app.get('/contacts/:id', (req, res) => {
   const id = req.params.id
-  const contact = contacts.find((item) => item.id === Number(id))
+  const contact = contacts.find((contact) => contact.id === Number(id))
   if (contact) {
     return res.send( { contact } )  
   } else {
@@ -38,7 +38,7 @@ app.get('/contacts/:id', (req, res) => {
 // Delete a contact by ID
 app.delete('/contacts/:id', (req, res) => {
   const id = Number(req.params.id)
-  const targetContact = contacts.find((item) => item.id === id)
+  const targetContact = contacts.find((contact) => contact.id === id)
   const deletionIndex = contacts.indexOf(targetContact)
   contacts.splice(deletionIndex, 1)
   if (targetContact) {

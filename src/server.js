@@ -16,9 +16,16 @@ app.get("/contacts", (req, res) => {
 
 // Create a new contact
 app.post("/contacts", (req, res) => {
-  const newContact = req.body;
+  const newId = Math.max(...contacts.map(contact => contact.id)) + 1
+
+  const newContact = { id: newId, ...req.body };
+  // The following comment shows a breakdown of the line above
+  // const newContact = req.body
+  // newContact.id = newId
+
   contacts.push(newContact);
-  return res.status(201).send(newContact);
+  console.log(newContact)
+  return res.status(201).send({ contact: newContact });
 });
 
 // Find contact by id

@@ -8,15 +8,18 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-// write your app code here
-
-// console.log(contacts);
-
 // 1. Retrieve a list of contacts
+app.get("/contacts", (req, res) => {
+  return res.send({ contacts });
+});
 
-app.get('/contacts', (req, res) => {
-    return res.send({contacts})
-})
-
+// 2. Create a new contact
+app.post("/contacts", (req, res) => {
+  const contact = req.body;
+  const id = contacts.push(contact);
+  contact.id = id;
+  contacts.push(contact);
+  return res.status(201).send({ contact });
+});
 
 module.exports = app;

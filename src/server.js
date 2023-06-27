@@ -37,15 +37,21 @@ app.get('/contacts/:id', (req, res) => {
 
 // Delete a contact by ID
 app.delete('/contacts/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const targetContact = contacts.find((contact) => contact.id === id)
-  const deletionIndex = contacts.indexOf(targetContact)
-  contacts.splice(deletionIndex, 1)
-  if (targetContact) {
-    return res.send( { contact: targetContact } )
+  const id = Number(req.params.id);
+  const contact = contacts.find((contact) => {
+    return contact.id === id;
+  });
+  const contactIndex = contacts.findIndex((item) => {
+    return item === contact;
+  });
+  if (contact) {
+    const deletedContact = contacts.splice(contactIndex, 1)[0];
+    console.log('contact', deletedContact);
+    return res.send({ contact: deletedContact });
   } else {
-    return res.send('No Contact Found')
+    return res.send("No Contact Found");
   }
-})
+});
+
 
 module.exports = app

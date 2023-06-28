@@ -98,26 +98,16 @@ app.delete('/contacts/:id', (req, res) => {
 })
 
 app.put('/contacts/:id', (req, res) => {
-    console.log(req.body)
+    const id = req.params.id
     const body = req.body
-    contacts.contacts.firstName = body.firstName
-    contacts.contacts.lastName = body.lastName
-    contacts.contacts.street = body.street
-    contacts.contacts.city = body.street
-    contacts.contacts.type = body.type
-    contacts.contacts.email = body.email
-    contacts.contacts.linkedin = body.linkedin
-    contacts.contacts.twitter = body.twitter
+    const contactReplace = contacts.contacts.find((item) => item.id === Number(id))
+    const contactAdd = {id: Number(id), ...body}
+    contacts.contacts.splice(contacts.contacts.indexOf(contactReplace), 1, contactAdd)
+    console.log(contactAdd)
+    return res.send({contact: contactAdd})
 
-    const arr = contacts.contacts.filter((obj) => {
-        
-        return obj.id === req.params.id / '1'
-    })
-    if (arr[0] === undefined) {
-        return res.status(404).send(`No such id as: ${req.params.id}`)
-    }
 
-    return res.send(contacts)
+  
 
 
 })

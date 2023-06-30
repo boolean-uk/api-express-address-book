@@ -103,11 +103,8 @@ app.put('/contacts/:id', (req, res) => {
     const contactReplace = contacts.contacts.find((item) => item.id === Number(id))
     const contactAdd = {id: Number(id), ...body}
     contacts.contacts.splice(contacts.contacts.indexOf(contactReplace), 1, contactAdd)
-    console.log(contactAdd)
+    // console.log(contactAdd)
     return res.send({contact: contactAdd})
-
-
-  
 
 
 })

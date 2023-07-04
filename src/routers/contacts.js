@@ -27,4 +27,12 @@ router.get('/:id', (req, res) => {
 	const contact = contacts.find((contact) => contact.id === id)
 	return res.send({ contact: contact })
 })
+
+// Delete contact by ID
+router.delete('/:id', (req, res) => {
+	const id = Number(req.params.id)
+	const contact = contacts.find((contact) => contact.id === id)
+	return res.send({ contact: contact })
+})
+
 module.exports = router

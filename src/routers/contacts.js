@@ -36,7 +36,7 @@ router.delete('/:id', (req, res) => {
 })
 
 // Update by ID
-router.put('/:id', (req, res) => {
+router.put('contacts/:id', (req, res) => {
 	const id = Number(req.params.id)
 	const body = req.body
 	const contactToUpdate = contacts.find((contact) => {
@@ -44,8 +44,7 @@ router.put('/:id', (req, res) => {
 	})
 
 	Object.assign(contactToUpdate, body)
-	const editedContact = contacts.find((contact) => contact.id === id)
-	return res.status(200).send({ contact: editedContact })
+	return res.status(200).send({ contact: contactToUpdate })
 })
 
 module.exports = router

@@ -32,22 +32,20 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	const id = Number(req.params.id)
 	const contactIndex = contacts.findIndex((contact) => contact.id === id)
-	 const deletedContact = contacts.splice(contactIndex, 1)[0]
-		return res.send({ remainingContacts: contacts })
+	const deletedContact = contacts.splice(contactIndex, 1)[0]
+	return res.send({ remainingContacts: contacts })
 })
 
 // Update by ID
-router.put('contacts/:id', (req, res) => {
+router.put('/:id', (req, res) => {
+	console.log('Put request')
 	const id = Number(req.params.id)
 	const body = req.body
-	const contactToUpdate = contacts.find((contact) => {
-		contact.id === id
-	})
-
-	const updatedContact = Object.assign(contactToUpdate, body)
-	console.log('contact', updatedContact)
-	console.log('array', contacts)
-	return res.status(200).send(updatedContact)
+	console.log('id', id)
+	console.log('body', body)
+	let contactToUpdate = contacts.find((contact) => contact.id === id)
+	Object.assign(contactToUpdate, body)
+	return res.status(200).send({ contact: contactToUpdate })
 })
 
 module.exports = router

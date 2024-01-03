@@ -102,7 +102,7 @@ describe('Address Book API', () => {
       expect(response.body).not.toEqual(undefined)
       expect(response.body.length).toEqual(2)
 
-      const [contact1, contact2] = response.body.contacts
+      const [contact1, contact2] = response.body
       expect(contact1.firstName).toEqual(updatedContact.firstName)
       expect(contact1.lastName).toEqual(updatedContact.lastName)
     })

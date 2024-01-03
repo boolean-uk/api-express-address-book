@@ -20,9 +20,16 @@ app.get("/contacts", (req, res) => {
 });
 
 app.get("/contacts/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    const contact = contacts.find(c => c.id === id);
-    res.json(contact);
+  const id = parseInt(req.params.id);
+  const contact = contacts.find((c) => c.id === id);
+  res.json(contact);
+});
+
+app.post("/contacts", (req, res) => {
+  const newContact = req.body;
+  newContact.id = contacts.length + 1;
+  contacts.push(newContact);
+  res.status(201).json(newContact);
 });
 
 module.exports = app;

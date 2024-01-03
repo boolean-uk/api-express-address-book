@@ -41,4 +41,11 @@ app.put("/contacts/:id", (req, res) => {
   res.json(updatedContact);
 });
 
+app.delete("/contacts/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const contactIndex = contacts.findIndex(c => c.id === id);
+    const [deletedContact] = contacts.splice(contactIndex, 1);
+    res.json(deletedContact);
+});
+
 module.exports = app;

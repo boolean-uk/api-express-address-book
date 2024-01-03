@@ -30,9 +30,9 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts/2')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contact).not.toEqual(undefined)
+      expect(response.body).not.toEqual(undefined)
 
-      const contact = response.body.contact
+      const contact = response.body
       expect(contact.id).toEqual(2)
       expect(contact.firstName).toEqual("Grace")
       expect(contact.lastName).toEqual("Hopper")
@@ -46,9 +46,9 @@ describe('Address Book API', () => {
         .send(createTestFormData)
 
       expect(response.status).toEqual(201)
-      expect(response.body.contact).not.toEqual(undefined)
+      expect(response.body).not.toEqual(undefined)
 
-      const contact = response.body.contact
+      const contact = response.body
       expect(contact.id).toEqual(3)
       expect(contact.firstName).toEqual(createTestFormData.firstName)
       expect(contact.lastName).toEqual(createTestFormData.lastName)

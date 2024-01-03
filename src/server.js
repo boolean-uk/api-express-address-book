@@ -19,4 +19,10 @@ app.get("/contacts", (req, res) => {
   res.status(200).json(contacts);
 });
 
+app.get("/contacts/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const contact = contacts.find(c => c.id === id);
+    res.json(contact);
+});
+
 module.exports = app;

@@ -62,10 +62,10 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contacts).not.toEqual(undefined)
-      expect(response.body.contacts.length).toEqual(3)
+      expect(response.body).not.toEqual(undefined)
+      expect(response.body.length).toEqual(3)
 
-      const [contact1, contact2, contact3] = response.body.contacts
+      const [contact1, contact2, contact3] = response.body
       expect(contact3.firstName).toEqual(createTestFormData.firstName)
       expect(contact3.lastName).toEqual(createTestFormData.lastName)
     })

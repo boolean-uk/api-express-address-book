@@ -4,12 +4,12 @@ const cors = require("cors");
 const app = express();
 
 const importedContacts = require("../data/contacts");
-console.log(importedContacts); // Check what's being imported
+console.log(importedContacts);
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-let contacts = importedContacts; // Initialize contacts with imported data
+let contacts = importedContacts;
 
 app.get("/", (req, res) => {
   res.status(201).json({ message: "Hello World!!" });
@@ -30,6 +30,15 @@ app.post("/contacts", (req, res) => {
   newContact.id = contacts.length + 1;
   contacts.push(newContact);
   res.status(201).json(newContact);
+});
+
+app.put("/contacts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedContactData = req.body;
+  const contactIndex = contacts.findIndex((c) => c.id === id);
+  const updatedContact = { ...contacts[contactIndex], ...updatedContactData };
+  contacts[contactIndex] = updatedContact;
+  res.json(updatedContact);
 });
 
 module.exports = app;

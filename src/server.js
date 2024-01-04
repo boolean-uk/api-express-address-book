@@ -9,11 +9,12 @@ app.use(cors())
 app.use(express.json())
 
 // write your app code here
-let currentContactId = 3
+
 app.get('/contacts', (req, res) => {
     res.status(200).json({contacts:contacts})
     
 })
+let currentContactId = 3
 app.post('/contacts', (req, res) => {
     const {firstName, lastName, street, city, type, email, linkedin, twitter} = req.body;
   
@@ -54,5 +55,22 @@ app.post('/contacts', (req, res) => {
   
     return res.json({ contact: foundContact });
   })
+  app.delete('/contacts/:id', (req, res) => {
+    const contactId = Number(req.params.id);
+
+    const contactIndex = contacts.findIndex((contact) => contact.id === contactId);
+
+    if (contactIndex === -1) {
+        return res.status(404).json({ message: `Delete failed. No such contact with ID ${contactId}` });
+    }
+
+    // Get the deleted contact before splicing it out
+    const deletedContact = contacts[contactIndex];
+
+    // Remove the contact from the array
+    contacts.splice(contactIndex, 1);
+
+    return res.status(200).json({ contact: deletedContact, message: 'Successfully deleted contact' });
+});
 
 module.exports = app

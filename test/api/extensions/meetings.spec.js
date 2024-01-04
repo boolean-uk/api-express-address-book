@@ -9,17 +9,17 @@ describe('Address Book API', () => {
     expectedMeetings = [
       {
         "name": "a test meeting about life",
-        "contactId": "1",
+        "contactId": 1,
         "id": 1
       },
       {
         "name": "another test meeting for wondering about existence",
-        "contactId": "2",
+        "contactId": 2,
         "id": 2
       },
       {
         "name": "a new meeting for the hopeful",
-        "contactId": "1",
+        "contactId": 1,
         "id": 3
       }
     ]
@@ -74,7 +74,7 @@ describe('Address Book API', () => {
         expect(response.body.meeting).not.toEqual(undefined)
         expect(response.body.meeting).toMatchObject({
           "name": 'best meeting ever',
-          "contactId": "1",
+          "contactId": 1,
           "id": 1
         })
       })
@@ -122,12 +122,12 @@ describe('Address Book API', () => {
         expectedMeetings = [
           {
             "name": "a test meeting about life",
-            "contactId": "1",
+            "contactId": 1,
             "id": 1
           },
           {
             "name": "a new meeting for the hopeful",
-            "contactId": "1",
+            "contactId": 1,
             "id": 3
           }
         ]

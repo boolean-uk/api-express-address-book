@@ -4,7 +4,7 @@ const cors = require("cors")
 const app = express()
 const data = require("../data/contacts.js")
 
-const { formatContact, findContact, removeContact, updateContact } = require("./functions.js")
+const { createContact, formatContact, findContact, removeContact, updateContact } = require("./functions.js")
 
 app.use(morgan("dev"))
 app.use(cors())
@@ -25,19 +25,7 @@ app.get("/contacts", (req, res) => {
 // CREATE NEW CONTACT
 app.post("/contacts", (req, res) => {
 
-    const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
-    const newContact = {
-        id: ++currentId,
-        firstName,
-        lastName,
-        street,
-        city,
-        type,
-        email,
-        linkedin,
-        twitter
-    }
-    data.push(newContact)
+    const newContact = createContact(req, data, currentId)
     return res.status(201).json(formatContact(newContact))
 })
 

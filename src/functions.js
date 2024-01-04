@@ -1,4 +1,22 @@
 // FUNCTS
+const createContact = (req, data, currentId) => {
+    const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
+    
+    const newContact = {
+        id: ++currentId,
+        firstName,
+        lastName,
+        street,
+        city,
+        type,
+        email,
+        linkedin,
+        twitter
+    }
+    data.push(newContact)
+    return newContact
+}
+
 const formatContact = (contact) => {
     const response = {
         "contact": contact
@@ -21,7 +39,7 @@ const removeContact = (data, contact) => {
 
 const updateContact = (req, contact) => {
     const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
-    
+
     contact.firstName = firstName
     contact.lastName = lastName
     contact.street = street
@@ -33,4 +51,4 @@ const updateContact = (req, contact) => {
     return contact
 }
 
-module.exports = { formatContact, findContact, removeContact, updateContact }
+module.exports = { createContact, formatContact, findContact, removeContact, updateContact }

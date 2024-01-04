@@ -33,7 +33,7 @@ app.post('/contacts', (req, res) => {
     contacts.push(newContact)
   
     // 201 = successfully created HTTP status code
-    res.status(201).json({ contacts: newContact })
+    res.status(201).json({ contact: newContact })
   })
   app.get('/contacts/:id', (req, res) => {
     // `req.params.id` is a string
@@ -72,5 +72,27 @@ app.post('/contacts', (req, res) => {
 
     return res.status(200).json({ contact: deletedContact, message: 'Successfully deleted contact' });
 });
+app.put('/contacts/:id', (req, res) => {
+    const contactId = Number(req.params.id);
+    // const text = req.body.text;
+    const { firstName, lastName, street, city, type, email, linkedin, twitter} = req.body;
+  
+    const foundContact = contacts.find((contact) => contact.id === contactId);
+  
+    if (!foundContact) {
+      return res.status(404).json({ message: `Update failed. No such post with ID ${contactId}`})
+    }
+  
+    foundContact.firstName = firstName
+    foundContact.lastName = lastName
+    foundContact.street = street
+    foundContact.city = city
+    foundContact.type = type
+    foundContact.email = email
+    foundContact.linkedin = linkedin
+    foundContact.twitter = twitter
+  
+    res.json({ contact: foundContact });
+  })
 
 module.exports = app

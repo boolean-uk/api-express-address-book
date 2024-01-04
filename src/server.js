@@ -35,24 +35,14 @@ app.get("/contacts/:id", (req, res) => {
   res.status(200).json({ contact: findContacts });
 });
 
-app.delete("/contacts/:id", (req, res) => {
-  const contactsId = Number(req.params.id);
-  const findContacts = contacts.find((contact) => contact.id === contactsId);
-  const contactIndex = contacts.indexOf(findContacts);
-  contacts.splice(contactIndex, 1);
-
-<<<<<<< HEAD
-  res.status(200).json({ contact: findContacts });
-});
-=======
-// delete a single  contact by Id
 app.delete('/contacts/:id', (req,res) => {
     const contactsId = Number(req.params.id)
     const findContacts = contacts.find((contact) => contact.id === contactsId)
     const contactIndex = contacts.indexOf(findContacts)
     contacts.splice(contactIndex, 1)
->>>>>>> b7b521f9865f2c2dd228bcde8ef270e6ee5fa911
 
+    res.status(200).json({contact: findContacts})
+})
 //updated contact by Id
 
 app.put("/contacts/:id", (req, res) => {

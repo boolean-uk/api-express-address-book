@@ -23,7 +23,6 @@ Before you begin, the API is going to use global variables to hold data - which 
     1. Diagram the endpoint lifecycle in a sequence diagram, using the image below these steps as a starting point
     2. Implement the endpoint
     3. Test the endpoint using any method you like; Insomnia, curl, unit tests etc.
-> IMPORTANT NOTE! In the response samples, they include a `meetings` property. This can be ignored for the Core Criteria but are required for the Extension Criteria.
 
 ![](./assets/API%20Address%20Book.png)
 

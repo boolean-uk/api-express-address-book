@@ -43,7 +43,7 @@ const addContact = (body) => {
     linkedin,
     twitter
   } = body
-  
+
   const newContact = new Contact(
       firstName,
       lastName,
@@ -56,7 +56,21 @@ const addContact = (body) => {
     )
   contacts.push(newContact)
   return newContact
+}
+
+const updateContact = (id, newBody) => {
+  const contact = getContactById(id)
+  const fields = Object.keys(newBody)
+
+  for (let i = 0; i < fields.length; i++) {
+    const currentKey = fields[i]
+    if (validField(currentKey)) {
+      contact[currentKey] = newBody[currentKey]
+    }
   }
+
+  return contact
+}
 
 class Contact {
   constructor(
@@ -85,5 +99,6 @@ module.exports = {
   contacts,
   addContact,
   getContactById,
+  updateContact,
   deleteContactById
 }

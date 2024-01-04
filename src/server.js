@@ -8,6 +8,9 @@ app.use(cors())
 app.use(express.json())
 
 // write your app code here
+app.get("/", (req , res) => {
+    res.json()
+})
 
 
 module.exports = app

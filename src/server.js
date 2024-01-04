@@ -8,6 +8,13 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
+const findContactBy = (id) => (contacts.find((contact) => contact.id === id));
+const getIdFromParams = (params) => {
+	const { id } = params;
+  const idNum = parseInt(id);
+	return idNum
+}
+
 app.get("/contacts", (req, res) => {
   return res.json({ contacts: contacts });
 });
@@ -15,10 +22,16 @@ app.get("/contacts", (req, res) => {
 app.post("/contacts", (req, res) => {
   const newContact = req.body;
 
-	newContact.id = contacts.length + 1;
-  contacts.push(newContact)
-	
-  return res.status(201).json({ "contact": newContact });
+  newContact.id = contacts.length + 1;
+  contacts.push(newContact);
+
+  return res.status(201).json({ contact: newContact });
+});
+
+app.get("/contacts/:id", (req, res) => { 
+	const id = getIdFromParams(req.params)
+  const foundContact = findContactBy(id);
+  return res.json({ contact: foundContact});
 });
 
 module.exports = app;

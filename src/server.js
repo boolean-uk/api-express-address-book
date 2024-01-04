@@ -131,13 +131,9 @@ app.put("/meetings/:id", (req, res) => {
       .status(404)
       .json(`No meeting found with id ${id} - could not update.1`);
 
-  const index = meetings.indexOf(foundMeeting);
+  foundMeeting.name = updatedMeeting.name
 
-  updatedMeeting.id = id;
-  updatedMeeting.contactId = foundMeeting.contactId;
-  meetings.splice(index, 1, updatedMeeting);
-
-  return res.json({ meeting: updatedMeeting });
+  return res.json({ meeting: foundMeeting });
 });
 
 app.get("/contacts/:id/meetings", (req, res) => {

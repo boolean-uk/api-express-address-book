@@ -8,6 +8,7 @@ describe("Address Book API", () => {
     createTestFormData = require("../../fixtures/meetings/createTestFormData.js");
     expectedMeetings = [
       {
+<<<<<<< HEAD
         name: "a test meeting about life",
         contactId: 1,
         id: 1,
@@ -24,6 +25,24 @@ describe("Address Book API", () => {
       },
     ];
   });
+=======
+        "name": "a test meeting about life",
+        "contactId": 1,
+        "id": 1
+      },
+      {
+        "name": "another test meeting for wondering about existence",
+        "contactId": 2,
+        "id": 2
+      },
+      {
+        "name": "a new meeting for the hopeful",
+        "contactId": 1,
+        "id": 3
+      }
+    ]
+  })
+>>>>>>> b7a4b827115b16082144e2613b69726f5c13be38
 
   describe("GET", () => {
     describe("GET /meetings", () => {
@@ -71,12 +90,21 @@ describe("Address Book API", () => {
         expect(response.status).toEqual(200);
         expect(response.body.meeting).not.toEqual(undefined);
         expect(response.body.meeting).toMatchObject({
+<<<<<<< HEAD
           name: "best meeting ever",
           contactId: 1,
           id: 1,
         });
       });
     });
+=======
+          "name": 'best meeting ever',
+          "contactId": 1,
+          "id": 1
+        })
+      })
+    })
+>>>>>>> b7a4b827115b16082144e2613b69726f5c13be38
 
     describe("DELETE /meetings/:id", () => {
       it("returns deleted meeting", async () => {
@@ -116,6 +144,7 @@ describe("Address Book API", () => {
       beforeEach(() => {
         expectedMeetings = [
           {
+<<<<<<< HEAD
             name: "a test meeting about life",
             contactId: 1,
             id: 1,
@@ -129,6 +158,21 @@ describe("Address Book API", () => {
       });
       it("returns meetings for contact", async () => {
         const response = await supertest(app).get("/contacts/1/meetings");
+=======
+            "name": "a test meeting about life",
+            "contactId": 1,
+            "id": 1
+          },
+          {
+            "name": "a new meeting for the hopeful",
+            "contactId": 1,
+            "id": 3
+          }
+        ]
+      })
+      it('returns meetings for contact', async () => {
+        const response = await supertest(app).get('/contacts/1/meetings')
+>>>>>>> b7a4b827115b16082144e2613b69726f5c13be38
 
         expect(response.status).toEqual(200);
         expect(response.body.meetings).not.toEqual(undefined);

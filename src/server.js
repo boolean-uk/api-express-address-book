@@ -14,8 +14,10 @@ app.get('/contacts', (req, res) => {
 })
 
 app.get('/contacts/:id', (req, res) => {
-  const { id } = Number(req.params)
-  return res.json( { contact: getContactById(id) })
+  const { id } = req.params
+  const contact = getContactById(Number(id))
+  console.log(contact, id)
+  return res.json( { contact })
 })
 
 app.post('/contacts', (req, res) => {
@@ -33,8 +35,8 @@ app.post('/contacts', (req, res) => {
 })
 
 app.delete('/contacts/:id', (req, res) => {
-  const { id } = Number(req.params)
-  const contact = getContactById(id)
+  const { id } = req.params
+  const contact = getContactById(Number(id))
   deleteContactById(id)
   return res.json( { contact })
 })

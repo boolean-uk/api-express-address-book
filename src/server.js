@@ -58,5 +58,9 @@ app.put("/contacts/:id", (req, res) => {
   appState.contacts[foundIndex] = { ...req.body, id: Number(req.params.id) };
   res.json({ contact: appState.contacts[foundIndex] });
 });
+// Meetings endpoints
+app.get("/meetings", (req, res) => {
+  res.json({ meetings: appState.meetings });
+});
 
 module.exports = app;

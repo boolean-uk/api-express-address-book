@@ -8,6 +8,7 @@ const createTestFormData = require("../test/fixtures/contacts/createTestFormData
 const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData.js");
 
 const meetings = require("../data/meetings.js");
+const createTestFormDatax = require("../test/fixtures/meetings/createTestFormData.js");
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -30,6 +31,8 @@ const findMeeting = (req, res) => {
   const meetingId = Number(req.params.meetingId);
 
   const foundMeeting = meetings.find((meeting) => meeting.id === meetingId);
+
+  foundMeeting.contactId.toString()
 
   if (!foundMeeting) {
     res.status(404).json({ message: `no such meeting with id: ${meetingId}` });
@@ -97,6 +100,14 @@ app.get("/meetings/:meetingId", (req, res) => {
   const meeting = findMeeting(req, res);
 
   return res.status(200).json({ meeting });
+});
+
+app.put("/meetings/:meetingId", (req, res) => {
+  const meeting = findMeeting(req, res);
+  const { name } = req.body;
+
+  meeting.name = name;
+  res.status(200).json({ meeting });
 });
 
 module.exports = app;

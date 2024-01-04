@@ -15,7 +15,7 @@ const STATE = {
   contacts,
   nextContactId: 3,
   meetings,
-  nextMeetingId: 3,
+  nextMeetingId: 4,
 };
 
 const getNextContactId = () => {
@@ -109,6 +109,16 @@ app.get("/contacts/:id/meetings", (req, res) => {
     (meeting) => meeting.contactId === Number(req.params.id)
   );
   res.json({ meetings: foundMeetings });
+});
+
+app.post("/contacts/:id/meetings", (req, res) => {
+  const count = STATE.meetings.push(req.body);
+  const newMeeting = { meeting: STATE.meetings[count - 1] };
+
+  newMeeting.meeting.id = getNextMeetingId();
+  newMeeting.meeting.contactId = Number(req.params.id);
+  
+  res.status(201).json(newMeeting);
 });
 
 module.exports = app;

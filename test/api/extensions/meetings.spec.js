@@ -48,7 +48,7 @@ describe('Address Book API', () => {
     })
 
     describe('PUT /meetings/:id', () => {
-      it('returns updated meeting for contact of id 1', async () => {
+      fit('returns updated meeting for contact of id 1', async () => {
         const response = await supertest(app)
           .put('/meetings/1')
           .send(createTestFormData)

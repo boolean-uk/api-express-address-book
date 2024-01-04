@@ -11,7 +11,7 @@ app.use(express.json());
 
 // CORE
 const findContactBy = (id) => contacts.find((contact) => contact.id === id);
-const findMeetingtBy = (id) => meetings.find((meeting) => meeting.id === id);
+const findMeetingBy = (id) => meetings.find((meeting) => meeting.id === id);
 
 const getIdFromParams = (params) => {
   const { id } = params;
@@ -66,17 +66,30 @@ app.get('/meetings', (req, res) => (res.json({"meetings": meetings})))
 
 app.get('/meetings/:id', (req, res) => {
 	const id = getIdFromParams(req.params)
-	const foundMeeting = findMeetingtBy(id)
+	const foundMeeting = findMeetingBy(id)
 	return res.json({"meeting": foundMeeting})
 })
 
 app.delete('/meetings/:id', (req, res) => {
 	const id = getIdFromParams(req.params)
-	const foundMeeting = findMeetingtBy(id)
+	const foundMeeting = findMeetingBy(id)
   const index = meetings.indexOf(foundMeeting);
 
 	meetings.splice(index, 1)
 	return res.json({"meeting": foundMeeting})
+})
+
+app.put('/meetings/:id', (req, res) => {
+	const id = getIdFromParams(req.params)
+	const updatedMeeting = req.body
+	const foundMeeting = findMeetingBy(id)
+  const index = meetings.indexOf(foundMeeting)
+
+	updatedMeeting.id = id
+	updatedMeeting.contactId = foundMeeting.contactId
+	meetings.splice(index, 1, updatedMeeting)
+
+	return res.json({"meeting": updatedMeeting})
 })
 
 module.exports = app;

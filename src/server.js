@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 app.get('/contacts', (req , res) => {
-    res.json('hello')
+    res.status(200).json({"contacts":contacts})
 })
 
 

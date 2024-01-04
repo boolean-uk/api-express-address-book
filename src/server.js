@@ -65,6 +65,9 @@ app.put('/contacts/:id', (req, res) => {
     return res.status(200).json({contact: foundContact})
 })
 
+
+// ............... EXTENSION ..............
+
 app.get('/meetings', (req, res) => {
     return res.status(200).json({ meetings: meetings })
 })
@@ -83,6 +86,19 @@ app.delete('/meetings/:id', (req, res) => {
     }
     return res.status(200).json({ meeting: foundMeetingToDelete})
 })
+
+app.put('/meetings/:id', (req, res) => {
+    const foundMeetingToUpdate = foundMeetingById(req, res)
+
+    if (foundMeetingToUpdate) {
+        const { name } = req.body
+
+        foundMeetingToUpdate.name = name
+    }
+    return res.status(200).json({meeting: foundMeetingToUpdate})
+})
+
+
 
 
 

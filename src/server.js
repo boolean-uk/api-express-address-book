@@ -42,20 +42,21 @@ app.post("/contacts", (req, res) => {
 app.get("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+
   if (!foundContact) return res.status(404).json("No such contact found.");
+
   return res.json({ contact: foundContact });
 });
 
 app.delete("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+
   if (!foundContact)
     return res.status(404).json("Could not delete. No such contact found.");
 
   const index = contacts.indexOf(foundContact);
-
   contacts.splice(index, 1);
-  // extension: deleting a contact also delete their meetings:
   deleteMeetingsBy(id);
 
   return res.json({ contact: foundContact });
@@ -64,6 +65,7 @@ app.delete("/contacts/:id", (req, res) => {
 app.put("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+
   if (!foundContact) return res.status(404).json("No such contact found");
 
   const index = contacts.indexOf(foundContact);
@@ -81,7 +83,7 @@ app.put("/contacts/:id", (req, res) => {
   ) {
     return res.status(422).json("Cannot update - missing input");
   }
-  
+
   updatedContact.id = id;
   contacts.splice(index, 1, updatedContact);
 
@@ -94,15 +96,21 @@ app.get("/meetings", (req, res) => res.json({ meetings: meetings }));
 app.get("/meetings/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundMeeting = findMeetingBy(id);
+
+  if (!foundMeeting) return res.status(404).json("No such meeting found.");
+
   return res.json({ meeting: foundMeeting });
 });
 
 app.delete("/meetings/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundMeeting = findMeetingBy(id);
-  const index = meetings.indexOf(foundMeeting);
 
+  if (!foundMeeting) return res.status(404).json("No such meeting found - could not delete.");
+
+  const index = meetings.indexOf(foundMeeting);
   meetings.splice(index, 1);
+
   return res.json({ meeting: foundMeeting });
 });
 
@@ -110,6 +118,9 @@ app.put("/meetings/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const updatedMeeting = req.body;
   const foundMeeting = findMeetingBy(id);
+
+  if (!foundMeeting) return res.status(404).json("No such meeting found - could not update.");
+  
   const index = meetings.indexOf(foundMeeting);
 
   updatedMeeting.id = id;
@@ -121,9 +132,14 @@ app.put("/meetings/:id", (req, res) => {
 
 app.get("/contacts/:id/meetings", (req, res) => {
   const contactId = getIdFromParams(req.params);
+
+  if (!findContactBy(contactId)) return res.status(404).json("No such contact found.")
+
   const meetingsForContact = meetings.filter(
     (meeting) => meeting.contactId === contactId
   );
+
+  if (!meetingsForContact) return res.status(404).json("No meetings found for this contact.");
 
   return res.json({ meetings: meetingsForContact });
 });
@@ -131,7 +147,12 @@ app.get("/contacts/:id/meetings", (req, res) => {
 app.post("/contacts/:id/meetings", (req, res) => {
   const id = meetings.length + 1;
   const contactId = getIdFromParams(req.params);
+
+  if (!findContactBy(contactId)) return res.status(404).json("No such contact found - could not add this meeting.")
+
   const newMeeting = req.body;
+
+  if (!newMeeting.name) return res.status(422).json("Missing input name - could not add this meeting.")
 
   newMeeting.id = id;
   newMeeting.contactId = contactId;

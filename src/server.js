@@ -72,5 +72,8 @@ Meetings
 
 */
 
+app.get("/meetings", (req, res) => {
+  res.json({ meetings: STATE.meetings });
+})
 
 module.exports = app;

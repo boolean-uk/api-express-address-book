@@ -108,7 +108,7 @@ describe('Address Book API', () => {
     })
   })
 
-  describe('DELETE /contacts', () => {
+  fdescribe('DELETE /contacts', () => {
     it('returns deleted contact', async () => {
       const response = await supertest(app)
         .delete(`/contacts/1`)

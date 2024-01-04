@@ -17,6 +17,17 @@ app.use(express.json())
 app.get('/contacts', (req , res) => {
     res.status(200).json({"contacts":contacts})
 })
+let newId= contacts.length
+app.post('/contacts', (req,res) => {
+    const contact = req.body
+ const newContact= {
+    ...contact,
+    id : newId++
+ }
+
+ contacts.push(newContact)
+ res.status(201).json({newContact})
+})
 
 
 module.exports = app

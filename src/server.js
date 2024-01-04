@@ -43,5 +43,14 @@ app.get('/contacts/:id', (req , res)  => {
     res.status(200).json({contact:findContacts})
 })
 
+app.delete('/contacts/:id', (req,res) => {
+    const contactsId = Number(req.params.id)
+    const findContacts = contacts.find((contact) => contact.id === contactsId)
+    const contactIndex = contacts.indexOf(findContacts)
+    contacts.splice(contactIndex, 1)
+
+    res.status(200).json({contact: findContacts})
+})
+
 
 module.exports = app

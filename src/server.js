@@ -21,15 +21,9 @@ app.get('/contacts/:id', (req, res) => {
 })
 
 app.post('/contacts', (req, res) => {
+  const { body } = req.body
   const contact = addContact(
-    "string",
-    "string",
-    "string",
-    "string",
-    "string",
-    "string",
-    "string",
-    "string"
+   { ...body }
   )
   return res.status(201).json( { contact }) 
 })

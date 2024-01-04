@@ -25,6 +25,7 @@ const contacts = [
 
 const fieldArr = [ "firstName", "lastName", "street", "city", "type", "email", "linkedin", "twitter" ]
 const validField = (fieldName) => fieldArr.includes(fieldName)
+
 let contactId = 0
 
 const getNewContactId = () => ++contactId

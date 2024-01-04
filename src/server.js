@@ -17,10 +17,7 @@ let currentContactId = 2
 
 // GET ALL CONTACTS
 app.get("/contacts", (req, res) => {
-    const allContacts = {
-        "contacts": contacts
-    }
-    return res.status(200).json(allContacts)
+    return res.status(200).json({ contacts })
 })
 
 // CREATE NEW CONTACT

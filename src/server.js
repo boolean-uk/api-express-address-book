@@ -43,4 +43,10 @@ app.get("/contacts/:id", (req, res) => {
   res.json({ contact: STATE.contacts[foundIndex] });
 });
 
+app.delete("/contacts/:id", (req, res) => {
+  const foundIndex = findContactIndex(req);
+  const [removedContact] = STATE.contacts.splice(foundIndex, 1);
+  res.json({ contact: removedContact });
+});
+
 module.exports = app;

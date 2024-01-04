@@ -22,6 +22,12 @@ const appState = {
 // Function to generate the next contact ID
 const generateNextContactId = () => appState.nextContactId++;
 
+// Function to find an array index by ID
+const findIndexById = (array, req) => {
+  const { id } = req.params;
+  return array.findIndex((item) => item.id === Number(id));
+};
+
 app.get("/contacts", (req, res) => {
   res.json({ contacts: appState.contacts });
 });
@@ -30,6 +36,10 @@ app.post("/contacts", (req, res) => {
   const newContact = { contact: { ...req.body, id: generateNextContactId() } };
   appState.contacts.push(newContact.contact);
   res.status(201).json(newContact);
+});
+app.get("/contacts/:id", (req, res) => {
+  const foundIndex = findIndexById(appState.contacts, req);
+  res.json({ contact: appState.contacts[foundIndex] });
 });
 
 module.exports = app;

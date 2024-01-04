@@ -45,4 +45,23 @@ app.delete("/contacts/:id", (req, res) => {
     res.status(200).json({contact: foundContact})
 });
 
+app.put('/contacts/:id', (req, res) => {
+    const foundContact = foundContactById(req, res)
+
+    if(foundContact) {
+        const { firstName, lastName, street, city, type, email, linkedin, twitter} = req.body;
+    
+        foundContact.firstName = firstName,
+        foundContact.lastName = lastName,
+        foundContact.street = street,
+        foundContact.city = city,
+        foundContact.type = type,
+        foundContact.email = email,
+        foundContact.linkedin = linkedin,
+        foundContact.twitter = twitter
+    }
+
+    return res.status(200).json({contact: foundContact})
+})
+
 module.exports = app;

@@ -6,14 +6,13 @@ const app = express()
 // import data
 const contacts = require('../data/contacts')
 
-// Global variables
-let idCounter = contacts.length + 1
-
+// Configuration
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 
-// write your app code here
+// Global variables
+let idCounter = contacts.length + 1
 
 // Retrieve a list of contacts
 app.get('/contacts', (req, res, next) => {
@@ -41,6 +40,23 @@ app.post('/contacts', (req, res, next) => {
   contacts.push({ id: idCounter++, ...data })
 
   res.status(201).json({ ...data })
+})
+
+// Get a single contact by id
+app.get('/contacts/:id', (req, res, next) => {
+  const findContact = contacts.find(
+    (contact) => contact.id === Number(req.params.id)
+  )
+
+  console.log(findContact)
+
+  if (!findContact) {
+    return res
+      .status(404)
+      .json({ message: "Contact with provided id doesn't found" })
+  }
+
+  res.status(200).json({ contact: findContact })
 })
 
 module.exports = app

@@ -42,13 +42,16 @@ app.post("/contacts", (req, res) => {
 app.get("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
-  if (!foundContact) return res.status(404).json('No such contact found')
+  if (!foundContact) return res.status(404).json("No such contact found.");
   return res.json({ contact: foundContact });
 });
 
 app.delete("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+  if (!foundContact)
+    return res.status(404).json("Could not delete. No such contact found.");
+
   const index = contacts.indexOf(foundContact);
 
   contacts.splice(index, 1);
@@ -61,9 +64,24 @@ app.delete("/contacts/:id", (req, res) => {
 app.put("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+  if (!foundContact) return res.status(404).json("No such contact found");
+
   const index = contacts.indexOf(foundContact);
   const updatedContact = req.body;
 
+  if (
+    !updatedContact.firstName ||
+    !updatedContact.lastName ||
+    !updatedContact.street ||
+    !updatedContact.city ||
+    !updatedContact.type ||
+    !updatedContact.email ||
+    !updatedContact.linkedin ||
+    !updatedContact.twitter
+  ) {
+    return res.status(422).json("Cannot update - missing input");
+  }
+  
   updatedContact.id = id;
   contacts.splice(index, 1, updatedContact);
 

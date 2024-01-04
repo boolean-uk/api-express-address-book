@@ -9,6 +9,7 @@ app.use(cors())
 app.use(express.json())
 
 // write your app code here
+let currentId = 2
 
 app.get("/contacts", (req, res) => {
 
@@ -17,6 +18,31 @@ app.get("/contacts", (req, res) => {
     }
 
     return res.status(200).json(allContacts)
+})
+
+app.post("/contacts", (req, res) => {
+
+    const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
+
+    const newContact = {
+        id: ++currentId,
+        firstName,
+        lastName,
+        street,
+        city,
+        type,
+        email,
+        linkedin,
+        twitter
+    }
+
+    data.push(newContact)
+
+    const returnedContact = {
+        "contact": newContact
+    }
+
+    return res.status(201).json(returnedContact)
 })
 
 module.exports = app

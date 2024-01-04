@@ -27,6 +27,26 @@ let contactId = 0
 
 const getNewContactId = () => ++contactId
 
+const addContact = (
+  firstName,
+    lastName,
+    street,
+    city,
+    type,
+    email,
+    linkedinURL,
+    twitterHandle
+) => contacts.push(new Contact(
+  firstName,
+    lastName,
+    street,
+    city,
+    type,
+    email,
+    linkedinURL,
+    twitterHandle
+))
+
 class Contact {
   constructor(
     firstName,
@@ -38,6 +58,7 @@ class Contact {
     linkedinURL,
     twitterHandle
   ) {
+    this.id = getNewContactId()
     this.firstName = firstName 
     this.lastName = lastName 
     this.street = street 

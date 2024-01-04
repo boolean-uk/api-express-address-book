@@ -89,4 +89,17 @@ app.get("/contacts/:id/meetings", (req, res) => {
   res.json({ meetings: foundMeetings });
 });
 
+// Endpoint to add a meeting for a specific contact
+app.post("/contacts/:id/meetings", (req, res) => {
+  const newMeeting = {
+    meeting: {
+      ...req.body,
+      id: generateNextMeetingId(),
+      contactId: Number(req.params.id),
+    },
+  };
+  appState.meetings.push(newMeeting.meeting);
+  res.status(201).json(newMeeting);
+});
+
 module.exports = app;

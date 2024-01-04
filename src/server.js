@@ -12,23 +12,30 @@ app.use(express.json());
 
 const STATE = {
   contacts,
-  nextId:3,
+  nextId: 3,
 };
 
 const getNextId = () => {
-    return STATE.nextId++
-}
+  return STATE.nextId++;
+};
 
 app.get("/contacts", (req, res) => {
   res.json({ contacts: STATE.contacts });
 });
 
-app.post("/contacts", (req,res) => {
-    const count = STATE.contacts.push(req.body)
-    const newContact = {contact: STATE.contacts [count -1]}
-    newContact.contact.id = getNextId();
-    res.status(201).json(newContact);
+app.post("/contacts", (req, res) => {
+  const count = STATE.contacts.push(req.body);
+  const newContact = { contact: STATE.contacts[count - 1] };
+  newContact.contact.id = getNextId();
+  res.status(201).json(newContact);
+});
 
+app.get("/contacts/:id", (req, res) => {
+  const { id } = req.params;
+  const foundIndex = STATE.contacts.findIndex(
+    (contact) => contact.id === id * 1
+  );
+  res.json({ contact: STATE.contacts[foundIndex] });
 });
 
 module.exports = app;

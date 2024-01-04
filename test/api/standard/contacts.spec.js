@@ -14,10 +14,10 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contacts).not.toEqual(undefined)
-      expect(response.body.contacts.length).toEqual(2)
+      expect(response.body).not.toEqual(undefined)
+      expect(response.body.length).toEqual(2)
 
-      const [contact1, contact2] = response.body.contacts
+      const [contact1, contact2] = response.body
       expect(contact1.firstName).toEqual("John")
       expect(contact1.lastName).toEqual("Carmack")
       expect(contact2.firstName).toEqual("Grace")
@@ -30,9 +30,9 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts/2')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contact).not.toEqual(undefined)
+      expect(response.body).not.toEqual(undefined)
 
-      const contact = response.body.contact
+      const contact = response.body
       expect(contact.id).toEqual(2)
       expect(contact.firstName).toEqual("Grace")
       expect(contact.lastName).toEqual("Hopper")
@@ -46,9 +46,9 @@ describe('Address Book API', () => {
         .send(createTestFormData)
 
       expect(response.status).toEqual(201)
-      expect(response.body.contact).not.toEqual(undefined)
+      expect(response.body).not.toEqual(undefined)
 
-      const contact = response.body.contact
+      const contact = response.body
       expect(contact.id).toEqual(3)
       expect(contact.firstName).toEqual(createTestFormData.firstName)
       expect(contact.lastName).toEqual(createTestFormData.lastName)
@@ -62,10 +62,10 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contacts).not.toEqual(undefined)
-      expect(response.body.contacts.length).toEqual(3)
+      expect(response.body).not.toEqual(undefined)
+      expect(response.body.length).toEqual(3)
 
-      const [contact1, contact2, contact3] = response.body.contacts
+      const [contact1, contact2, contact3] = response.body
       expect(contact3.firstName).toEqual(createTestFormData.firstName)
       expect(contact3.lastName).toEqual(createTestFormData.lastName)
     })
@@ -85,9 +85,9 @@ describe('Address Book API', () => {
         .send(updateTestFormData)
 
       expect(response.status).toEqual(200)
-      expect(response.body.contact).not.toEqual(undefined)
+      expect(response.body).not.toEqual(undefined)
 
-      const contact = response.body.contact
+      const contact = response.body
       expect(contact).toMatchObject(updatedContact)
     })
 
@@ -99,10 +99,10 @@ describe('Address Book API', () => {
       const response = await supertest(app).get('/contacts')
 
       expect(response.status).toEqual(200)
-      expect(response.body.contacts).not.toEqual(undefined)
-      expect(response.body.contacts.length).toEqual(2)
+      expect(response.body).not.toEqual(undefined)
+      expect(response.body.length).toEqual(2)
 
-      const [contact1, contact2] = response.body.contacts
+      const [contact1, contact2] = response.body
       expect(contact1.firstName).toEqual(updatedContact.firstName)
       expect(contact1.lastName).toEqual(updatedContact.lastName)
     })
@@ -114,22 +114,22 @@ describe('Address Book API', () => {
         .delete(`/contacts/1`)
 
       expect(response.status).toEqual(200)
-      expect(response.body.contact).not.toEqual(undefined)
-      expect(response.body.contact.id).toEqual(1)
+      expect(response.body).not.toEqual(undefined)
+      expect(response.body.id).toEqual(1)
     })
 
     it('removes contact from data store', async () => {
       const response = await supertest(app)
         .delete(`/contacts/1`)
 
-      const deletedContact = response.body.contact
+      const deletedContact = response.body
 
       const response2 = await supertest(app).get('/contacts')
 
       expect(response2.status).toEqual(200)
-      expect(response2.body.contacts).not.toEqual(undefined)
-      expect(response2.body.contacts.length).toEqual(1)
-      expect(response2.body.contacts).not.toContain(deletedContact)
+      expect(response2.body).not.toEqual(undefined)
+      expect(response2.body.length).toEqual(1)
+      expect(response2.body).not.toContain(deletedContact)
     })
   })
 })

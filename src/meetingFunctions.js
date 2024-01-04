@@ -18,4 +18,11 @@ const removeMeeting = (data, meeting) => {
     data.splice(meetingIndex, 1)
 }
 
-module.exports = { findMeeting, formatMeeting, removeMeeting }
+const updateMeeting = (req, meeting) => {
+
+    const { name } = req.body
+    meeting.name = name
+    return meeting
+}
+
+module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting }

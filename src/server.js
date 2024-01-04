@@ -69,9 +69,23 @@ app.get('/meetings', (req, res) => {
     return res.status(200).json({ meetings: meetings })
 })
 
-app.get('/meetings/:id', () => {
+app.get('/meetings/:id', (req, res) => {
     const foundMeeting = foundMeetingById(req, res)
     return res.status(200).json({meeting: foundMeeting})
 })
+
+app.delete('/meetings/:id', (req, res) => {
+    const foundMeetingToDelete = foundMeetingById(req, res)
+
+    if(foundMeetingToDelete) {
+        const foundMeetingIndex = meetings.indexOf(foundMeetingToDelete)
+        meetings.splice(foundMeetingIndex, 1)
+    }
+    return res.status(200).json({ meeting: foundMeetingToDelete})
+})
+
+
+
+
 
 module.exports = app;

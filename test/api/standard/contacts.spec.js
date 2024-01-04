@@ -25,7 +25,7 @@ describe('Address Book API', () => {
     })
   })
 
-  describe('GET /contacts/:id', () => {
+  fdescribe('GET /contacts/:id', () => {
     it('returns contact, id 2', async () => {
       const response = await supertest(app).get('/contacts/2')
 

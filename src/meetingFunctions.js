@@ -13,4 +13,9 @@ const formatMeeting = (meeting) => {
     return response
 }
 
-module.exports = { findMeeting, formatMeeting }
+const removeMeeting = (data, meeting) => {
+    const meetingIndex = data.indexOf(meeting)
+    data.splice(meetingIndex, 1)
+}
+
+module.exports = { findMeeting, formatMeeting, removeMeeting }

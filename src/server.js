@@ -2,7 +2,7 @@ const express = require("express")
 const morgan = require("morgan")
 const cors = require("cors")
 const app = express()
-const data = require("../data/contacts.js")
+const contacts = require("../data/contacts.js")
 const meetings = require("../data/meetings.js")
 
 const { createContact, formatContact, findContact, removeContact, updateContact } = require("./contactFunctions.js")
@@ -19,7 +19,7 @@ let currentContactId = 2
 app.get("/contacts", (req, res) => {
 
     const allContacts = {
-        "contacts": data
+        "contacts": contacts
     }
     return res.status(200).json(allContacts)
 })
@@ -27,22 +27,22 @@ app.get("/contacts", (req, res) => {
 // CREATE NEW CONTACT
 app.post("/contacts", (req, res) => {
 
-    const newContact = createContact(req, data, currentContactId)
+    const newContact = createContact(req, contacts, currentContactId)
     return res.status(201).json(formatContact(newContact))
 })
 
 // FIND CONTACT BY ID
 app.get("/contacts/:id", (req, res) => {
 
-    const foundContact = findContact(req, res, data)
+    const foundContact = findContact(req, res, contacts)
     return res.status(200).json(formatContact(foundContact))
 })
 
 // DELETE CONTACT BY ID
 app.delete("/contacts/:id", (req, res) => {
     
-    const foundContact = findContact(req, res, data)
-    removeContact(data, foundContact)
+    const foundContact = findContact(req, res, contacts)
+    removeContact(contacts, foundContact)
     meetings.map(meeting => {
         if (Number(meeting.contactId) === foundContact.id) {
             removeMeeting(meetings, meeting)
@@ -54,7 +54,7 @@ app.delete("/contacts/:id", (req, res) => {
 // UPDATE A CONTACT BY ID
 app.put("/contacts/:id", (req, res) => {
 
-    const contact = findContact(req, res, data)
+    const contact = findContact(req, res, contacts)
     updateContact(req, contact)
     return res.status(200).json(formatContact(contact))
 })
@@ -94,7 +94,7 @@ app.put("/meetings/:id", (req, res) => {
 // GET MEETING FOR CONTACT
 app.get("/contacts/:id/meetings", (req, res) => {
 
-    const contact = findContact(req, res, data)
+    const contact = findContact(req, res, contacts)
     const contactMeetings = getContactMeetings(contact, meetings)
     return res.status(200).json(contactMeetings)
 })
@@ -104,7 +104,7 @@ let currentMeetingId = 3
 
 app.post("/contacts/:id/meetings", (req, res) => {
 
-    const contact = findContact(req, res, data)
+    const contact = findContact(req, res, contacts)
     const newMeeting = createMeeting(req, contact, currentMeetingId, meetings)
     return res.status(201).json(formatMeeting(newMeeting))
 })

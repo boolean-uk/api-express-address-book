@@ -9,5 +9,11 @@ app.use(express.json())
 
 // write your app code here
 
+const contacts = require("../data/contacts")
+
+app.get('/contacts', (req, res) => {
+    res.status(200).json({contacts})
+})
+
 
 module.exports = app

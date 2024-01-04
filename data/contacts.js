@@ -23,4 +23,33 @@ const contacts = [
   }
 ]
 
-module.exports = contacts
+let contactId = 0
+
+const getNewContactId = () => ++contactId
+
+class Contact {
+  constructor(
+    firstName,
+    lastName,
+    street,
+    city,
+    type,
+    email,
+    linkedinURL,
+    twitterHandle
+  ) {
+    this.firstName = firstName 
+    this.lastName = lastName 
+    this.street = street 
+    this.city = city 
+    this.type = type 
+    this.email = email 
+    this.linkedinURL = linkedinURL
+    this.twitterHandle = `https://twitter.com/${twitterHandle}` 
+  }
+}
+
+module.exports = { 
+  contacts,
+  Contact
+}

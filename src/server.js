@@ -42,4 +42,15 @@ app.get("/contacts/:id", (req, res) => {
   res.json({ contact: appState.contacts[foundIndex] });
 });
 
+app.delete("/contacts/:id", (req, res) => {
+  const foundContactIndex = findIndexById(appState.contacts, req);
+  const [removedContact] = appState.contacts.splice(foundContactIndex, 1);
+
+  appState.meetings = appState.meetings.filter(
+    (meeting) => meeting.contactId !== Number(req.params.id)
+  );
+
+  res.json({ contact: removedContact });
+});
+
 module.exports = app;

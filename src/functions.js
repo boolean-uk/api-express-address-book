@@ -15,4 +15,9 @@ const findContact = (idParam, res, data) => {
     return foundContact
 }
 
-module.exports = { formatContact, findContact }
+const removeContact = (data, contact) => {
+    const contactIndex = data.indexOf(contact)
+    data.splice(contactIndex, 1)
+}
+
+module.exports = { formatContact, findContact, removeContact }

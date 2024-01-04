@@ -28,6 +28,16 @@ const validField = (fieldName) => fieldArr.includes(fieldName)
 
 let contactId = 0
 
+const initContactId = () => {
+  contacts.forEach((contact) => {
+    if (contact.id > contactId) {
+      contactId = contact.id
+    }
+  })
+}
+
+initContactId()
+
 const getNewContactId = () => ++contactId
 const getContactById = (id) => contacts.find((contact) => contact.id === id)
 const deleteContactById = (id) => contacts.filter((contact) => contact.id !== id)
@@ -45,15 +55,16 @@ const addContact = (body) => {
   } = body
 
   const newContact = new Contact(
-      firstName,
-      lastName,
-      street,
-      city,
-      type,
-      email,
-      linkedin,
-      twitter
-    )
+    firstName,
+    lastName,
+    street,
+    city,
+    type,
+    email,
+    linkedin,
+    twitter
+  )
+
   contacts.push(newContact)
   return newContact
 }

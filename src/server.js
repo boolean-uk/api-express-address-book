@@ -28,6 +28,7 @@ app.put('/contacts/:id', (req, res) => {
 
 app.post('/contacts', (req, res) => {
   const contact = addContact(req.body)
+  console.log(contact, "HERE")
   return res.status(201).json( { contact }) 
 })
 

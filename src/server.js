@@ -4,6 +4,7 @@ const cors = require("cors")
 
 const {contacts} = require('../data/contacts.js')
 let {idCounter} = require('../data/contacts.js')
+const foundContactById = require('./client.js')
 const app = express()
 
 app.use(morgan("dev"))
@@ -27,6 +28,11 @@ app.post('/contacts', (req, res) => {
     contacts.push(newContact)
 
     return res.status(201).json({contact: newContact})
+})
+
+app.get('/contacts/:id', (req, res) => {
+    const foundContact = foundContactById(req, res)
+    return res.status(200).json({contact: foundContact})
 })
 
 

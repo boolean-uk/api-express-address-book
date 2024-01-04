@@ -11,6 +11,7 @@ app.use(express.json())
 // write your app code here
 let contacts = importContacts
 
+
 app.get('/', (req, res) => {
     res.status(201).json({message: "Welcome to my contacts page"})
 })
@@ -19,5 +20,18 @@ app.get('/', (req, res) => {
 app.get('/contacts', (req, res) => {
 res.json({contacts: contacts})
 })
+
+// Get request to return a specific contact by id
+app.get('/contacts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const contact = contacts.find(contact => contact.id === id);
+
+    if (contact) {
+        res.status(200).json({contact: contact});
+    } else {
+        res.status(404).json({ message: "Contact not found" });
+    }
+});
+
 
 module.exports = app

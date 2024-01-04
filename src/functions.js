@@ -11,7 +11,6 @@ const findContact = (idParam, res, data) => {
     const foundContact = data.find(contact => contact.id === contactId)
 
     if (!foundContact) return res.status(404).json(`Contact with id ${contactId} does not exist`)
-    
     return foundContact
 }
 
@@ -22,7 +21,7 @@ const removeContact = (data, contact) => {
 
 const updateContact = (req, contact) => {
     const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
-
+    
     contact.firstName = firstName
     contact.lastName = lastName
     contact.street = street
@@ -31,7 +30,6 @@ const updateContact = (req, contact) => {
     contact.email = email
     contact.linkedin = linkedin
     contact.twitter = twitter
-
     return contact
 }
 

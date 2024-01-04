@@ -7,7 +7,10 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
 
-// write your app code here
+const contacts = require('../data/contacts.js')
 
+app.get('/contacts', (req, res) => {
+  return res.json(contacts)
+})
 
 module.exports = app

@@ -7,10 +7,15 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
 
-const { contacts, Contact } = require('../data/contacts.js')
+const { contacts, addContact } = require('../data/contacts.js')
 
 app.get('/contacts', (req, res) => {
   return res.json({ contacts })
+})
+
+app.post('/contacts', (req, res) => {
+  const contact = addContact("string","string","string", "string","string","string","string","string")
+  return res.status(201).json( { contact }) 
 })
 
 module.exports = app

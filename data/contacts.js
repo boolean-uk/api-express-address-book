@@ -28,24 +28,28 @@ let contactId = 0
 const getNewContactId = () => ++contactId
 
 const addContact = (
-  firstName,
+    firstName,
     lastName,
     street,
     city,
     type,
     email,
-    linkedinURL,
-    twitterHandle
-) => contacts.push(new Contact(
-  firstName,
+    linkedin,
+    twitter
+) => {
+  const newContact = new Contact(
+    firstName,
     lastName,
     street,
     city,
     type,
     email,
-    linkedinURL,
-    twitterHandle
-))
+    linkedin,
+    twitter
+    )
+  contacts.push(newContact)
+  return newContact
+  }
 
 class Contact {
   constructor(
@@ -66,11 +70,11 @@ class Contact {
     this.type = type 
     this.email = email 
     this.linkedinURL = linkedinURL
-    this.twitterHandle = `https://twitter.com/${twitterHandle}` 
+    this.twitterHandle = twitterHandle
   }
 }
 
 module.exports = { 
   contacts,
-  Contact
+  addContact
 }

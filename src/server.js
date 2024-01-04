@@ -14,6 +14,19 @@ app.use(express.json())
 // Global variables
 let idCounter = contacts.length + 1
 
+// Global functions
+const findContactById = (id) => {
+  const findContact = contacts.find((contact) => contact.id === Number(id))
+
+  if (!findContact) {
+    const err = new Error(`Contact with provided id doesn't found`)
+    err.status = 404
+    throw err
+  }
+
+  return findContact
+}
+
 // Retrieve a list of contacts
 app.get('/contacts', (req, res, next) => {
   if (!Array.isArray(contacts) || contacts.length === 0) {
@@ -44,19 +57,29 @@ app.post('/contacts', (req, res, next) => {
 
 // Get a single contact by id
 app.get('/contacts/:id', (req, res, next) => {
-  const findContact = contacts.find(
-    (contact) => contact.id === Number(req.params.id)
-  )
+  try {
+    const findContact = findContactById(req.params.id)
 
-  console.log(findContact)
-
-  if (!findContact) {
-    return res
-      .status(404)
-      .json({ message: "Contact with provided id doesn't found" })
+    res.status(200).json({ contact: findContact })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
   }
+})
 
-  res.status(200).json({ contact: findContact })
+// Delete a single contact by id
+app.delete('/contacts/:id', (req, res, next) => {
+  try {
+    const findContact = findContactById(req.params.id)
+
+    contacts.splice(
+      contacts.findIndex((contact) => contact.id === findContact.id),
+      1
+    )
+
+    res.status(200).json({ contact: findContact })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
 })
 
 module.exports = app

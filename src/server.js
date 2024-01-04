@@ -3,6 +3,7 @@ const morgan = require("morgan")
 const cors = require("cors")
 const app = express()
 const data = require("../data/contacts.js")
+const meetings = require("../data/meetings.js")
 
 const { createContact, formatContact, findContact, removeContact, updateContact } = require("./functions.js")
 
@@ -50,6 +51,16 @@ app.put("/contacts/:id", (req, res) => {
     const contact = findContact(req.params.id, res, data)
     updateContact(req, contact)
     return res.status(200).json(formatContact(contact))
+})
+
+// EXTENSION
+// GET ALL MEETINGS
+app.get("/meetings", (req, res) => {
+    
+    const allMeetings = {
+        meetings
+    }
+    return res.status(200).json(allMeetings)
 })
 
 module.exports = app

@@ -9,7 +9,6 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-// CORE
 const findContactBy = (id) => contacts.find((contact) => contact.id === id);
 const findMeetingBy = (id) => meetings.find((meeting) => meeting.id === id);
 const deleteMeetingsBy = (contactId) => {
@@ -21,6 +20,7 @@ const deleteMeetingsBy = (contactId) => {
 	})
 }
 
+// CORE
 const getIdFromParams = (params) => {
   const { id } = params;
   const idNum = parseInt(id);

@@ -104,7 +104,7 @@ describe('Address Book API', () => {
         expect(response2.body.meetings).not.toContain(deletedMeeting)
       })
 
-      fit('deleting a contact, also deletes all its meetings from data store', async () => {
+      it('deleting a contact, also deletes all its meetings from data store', async () => {
         await supertest(app)
           .delete(`/contacts/1`)
 

@@ -26,11 +26,14 @@ const getNextMeetingId = () => {
   return STATE.nextMeetingId++;
 };
 
-const findContactIndex = (req) => {
+/**
+ * @param {array} array
+ * @param {import('express').Request} req
+ * @returns {number}
+ */
+const findStateIndex = (array, req) => {
   const { id } = req.params;
-  const foundIndex = STATE.contacts.findIndex(
-    (contact) => contact.id === id * 1
-  );
+  const foundIndex = array.findIndex((contact) => contact.id === Number(id));
   return foundIndex;
 };
 
@@ -46,22 +49,22 @@ app.post("/contacts", (req, res) => {
 });
 
 app.get("/contacts/:id", (req, res) => {
-  const foundIndex = findContactIndex(req);
+  const foundIndex = findStateIndex(STATE.contacts, req);
   res.json({ contact: STATE.contacts[foundIndex] });
 });
 
 app.delete("/contacts/:id", (req, res) => {
-  const foundIndex = findContactIndex(req);
+  const foundIndex = findStateIndex(STATE.contacts, req);
   const [removedContact] = STATE.contacts.splice(foundIndex, 1);
   res.json({ contact: removedContact });
 });
 
 app.put("/contacts/:id", (req, res) => {
-  const foundIndex = findContactIndex(req);
-  foundContact = STATE.contacts[foundIndex] = {
+  const foundIndex = findStateIndex(STATE.contacts, req);
+  const foundContact = (STATE.contacts[foundIndex] = {
     ...req.body,
-    id: req.params.id * 1,
-  };
+    id: Number(req.params.id),
+  });
 
   res.json({ contact: foundContact });
 });
@@ -74,6 +77,6 @@ Meetings
 
 app.get("/meetings", (req, res) => {
   res.json({ meetings: STATE.meetings });
-})
+});
 
 module.exports = app;

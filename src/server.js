@@ -63,9 +63,19 @@ app.put("/contacts/:id", (req, res) => {
 // EXTENSION
 
 app.get('/meetings', (req, res) => (res.json({"meetings": meetings})))
+
 app.get('/meetings/:id', (req, res) => {
 	const id = getIdFromParams(req.params)
 	const foundMeeting = findMeetingtBy(id)
+	return res.json({"meeting": foundMeeting})
+})
+
+app.delete('/meetings/:id', (req, res) => {
+	const id = getIdFromParams(req.params)
+	const foundMeeting = findMeetingtBy(id)
+  const index = meetings.indexOf(foundMeeting);
+
+	meetings.splice(index, 1)
 	return res.json({"meeting": foundMeeting})
 })
 

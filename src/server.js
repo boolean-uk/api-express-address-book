@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 const importContacts = require("../data/contacts");
+const { firstName } = require("../test/fixtures/contacts/createTestFormData");
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -39,5 +40,22 @@ app.post("/contacts", (req, res) => {
     contacts.push(newContact);
     return res.status(201).json({ contact: newContact });
 });
+
+
+// Put request return updated contact
+app.put('/contacts/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const foundContact = contacts.find(contact => contact.id === id);
+
+    if (!foundContact) {
+        return res.status(404).json({ error: `No such contact with id: ${id}` });
+    }
+    
+    const updates = req.body;
+    Object.assign(foundContact, updates);
+
+    return res.status(200).json({ contact: foundContact }); 
+});
+
 
 module.exports = app;

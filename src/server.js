@@ -6,6 +6,7 @@ const data = require("../data/contacts.js")
 const meetings = require("../data/meetings.js")
 
 const { createContact, formatContact, findContact, removeContact, updateContact } = require("./functions.js")
+const { findMeeting, formatMeeting } = require("./meetingFunctions.js")
 
 app.use(morgan("dev"))
 app.use(cors())
@@ -61,6 +62,13 @@ app.get("/meetings", (req, res) => {
         meetings
     }
     return res.status(200).json(allMeetings)
+})
+
+// GET MEETING BY ID
+app.get("/meetings/:id", (req, res) => {
+
+    const foundMeeting = findMeeting(req, res, meetings)
+    return res.status(200).json(formatMeeting(foundMeeting))
 })
 
 module.exports = app

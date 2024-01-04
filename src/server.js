@@ -7,7 +7,7 @@ const contacts = require("../data/contacts.js");
 const createTestFormData = require("../test/fixtures/contacts/createTestFormData.js");
 const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData.js");
 
-const meetings = require('../data/meetings.js')
+const meetings = require("../data/meetings.js");
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -25,6 +25,19 @@ const findContact = (req, res) => {
 
   return foundContact;
 };
+
+const findMeeting = (req, res) => {
+  const meetingId = Number(req.params.meetingId);
+
+  const foundMeeting = meetings.find((meeting) => meeting.id === meetingId);
+
+  if (!foundMeeting) {
+    res.status(404).json({ message: `no such meeting with id: ${meetingId}` });
+  }
+
+  return foundMeeting;
+};
+
 let currentID = 2;
 
 app.get("/contacts", (req, res) => {
@@ -76,8 +89,14 @@ app.put("/contacts/:contactId", (req, res) => {
 });
 
 // Extension
-app.get('/meetings', (req, res) => {
-  return res.status(200).json({meetings})
-})
+app.get("/meetings", (req, res) => {
+  return res.status(200).json({ meetings });
+});
+
+app.get("/meetings/:meetingId", (req, res) => {
+  const meeting = findMeeting(req, res);
+
+  return res.status(200).json({ meeting });
+});
 
 module.exports = app;

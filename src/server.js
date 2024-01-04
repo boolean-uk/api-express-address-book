@@ -27,4 +27,11 @@ app.post('/contacts', (req, res) => {
   return res.status(201).json( { contact }) 
 })
 
+app.delete('/contacts/:id', (req, res) => {
+  const { id } = Number(req.params)
+  const contact = getContactById(id)
+  deleteContactById(id)
+  return res.json( { contact })
+})
+
 module.exports = app

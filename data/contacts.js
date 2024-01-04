@@ -78,5 +78,7 @@ class Contact {
 
 module.exports = { 
   contacts,
-  addContact
+  addContact,
+  getContactById,
+  deleteContactById
 }

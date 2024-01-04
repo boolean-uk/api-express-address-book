@@ -9,7 +9,7 @@
 
 # Exercise
 
-Implement the API for the Address Book Challenge using an API client like [Insomnia](https://insomnia.rest/).
+Implement the API for this exercise using an API client like [Insomnia](https://insomnia.rest/).
 
 Use the [API Spec](https://boolean-uk.github.io/api-express-address-book/) as your source of requirements for each endpoint you need to build.
 
@@ -18,11 +18,12 @@ Before you begin, the API is going to use global variables to hold data - which 
 
 ### Set up
 1. Fork and clone this repository
-2. Create an express application following the steps above.
+2. Create an express application following the same steps as per the [previous exercise](https://github.com/boolean-uk/api-express-counter/)
 3. Implement the API, starting with the `contacts` endpoint, following this workflow for **each** endpoint:
     1. Diagram the endpoint lifecycle in a sequence diagram, using the image below these steps as a starting point
     2. Implement the endpoint
     3. Test the endpoint using any method you like; Insomnia, curl, unit tests etc.
+> IMPORTANT NOTE! In the response samples, they include a `meetings` property. This can be ignored for the Core Criteria but are required for the Extension Criteria.
 
 ![](./assets/API%20Address%20Book.png)
 

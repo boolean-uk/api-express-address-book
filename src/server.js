@@ -84,4 +84,10 @@ app.get("/meetings/:id", (req, res) => {
   res.json({ meeting: STATE.meetings[foundIndex] });
 });
 
+app.delete("/meetings/:id", (req, res) => {
+  const foundIndex = findStateIndex(STATE.meetings, req);
+  const [removedMeeting] = STATE.meetings.splice(foundIndex, 1);
+  res.json({ meeting: removedMeeting });
+});
+
 module.exports = app;

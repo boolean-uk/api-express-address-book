@@ -57,10 +57,7 @@ app.put("/contacts/:id", (req, res) => {
 // EXTENSION
 // GET ALL MEETINGS
 app.get("/meetings", (req, res) => {
-    const allMeetings = {
-        meetings
-    }
-    return res.status(200).json(allMeetings)
+    return res.status(200).json({ meetings })
 })
 
 // GET MEETING BY ID

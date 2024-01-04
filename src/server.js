@@ -26,16 +26,25 @@ app.post('/contacts', (req, res) => {
 
     const newContact = {
         ...body,
-        id: currentContactId,
+        id: ++currentContactId,
     }
 
     contacts.push(newContact)
-    return res.status(201).json({newContact})
+    return res.status(201).json({ contact: newContact })
+})
+
+app.put('/contacts/:id', (req, res) => {
+    // can't get this to work
+
+    return res.status(200).json()
 })
 
 app.delete('/contacts/:id', (req, res) => {
     const contact = contacts.find((c) => c.id === Number(req.params.id))
+    contacts.splice(contacts.indexOf(contact), 1)
     res.status(200).json({contact})
 })
+
+
 
 module.exports = app

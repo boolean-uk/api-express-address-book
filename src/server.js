@@ -7,6 +7,8 @@ const contacts = require("../data/contacts.js");
 const createTestFormData = require("../test/fixtures/contacts/createTestFormData.js");
 const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData.js");
 
+const meetings = require('../data/meetings.js')
+
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
@@ -72,5 +74,10 @@ app.put("/contacts/:contactId", (req, res) => {
 
   res.status(200).json({ contact });
 });
+
+// Extension
+app.get('/meetings', (req, res) => {
+  return res.status(200).json({meetings})
+})
 
 module.exports = app;

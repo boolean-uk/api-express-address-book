@@ -68,12 +68,18 @@ app.post("/contacts", (req, res) => {
 
 app.delete("/contacts/:contactId", (req, res) => {
   const contact = findContact(req, res);
-  //   const contactId = Number(req.params.contactId);
 
-  const findIndex = contacts.indexOf(contact);
-  contacts.splice(findIndex, 1);
+  if (contact) {
+    const contactIndex = contacts.indexOf(contact);
+    contacts.splice(contactIndex, 1);
 
-  res.json({ contact });
+    const newMeetings = meetings.filter(
+      (meetings) => meetings.contactId !== contact.id
+    );
+    meetings.splice(0, meetings.length, newMeetings);
+  }
+
+  res.status(200).json({ contact: foundContact });
 });
 
 app.put("/contacts/:contactId", (req, res) => {
@@ -116,7 +122,34 @@ app.delete("/meetings/:meetingId", (req, res) => {
   const meetingIndex = meetings.indexOf(meeting);
   meetings.splice(meetingIndex, 1);
 
-  return res.status(200).json({ meeting });
+  return res.status(200).json({ meeting: meeting });
+});
+
+app.get("/contacts/:contactId/meetings", (req, res) => {
+  const contactId = Number(req.params.contactId);
+  const findMeetingByContactId = meetings.filter(
+    (meeting) => meeting.contactId === contactId
+  );
+
+  if (!findMeetingByContactId) {
+    res.status(404).json({
+      error: `No meetings with contact ID: ${contactId}`,
+    });
+  }
+
+  return res.status(200).json({ meetings: findMeetingByContactId });
+});
+
+let currentMeetingId = 4;
+app.post("/contacts/:contactId/meetings", (req, res) => {
+  const contactId = Number(req.params.contactId);
+  let newMeeting = req.body;
+  newMeeting = { ...newMeeting, contactId: contactId, id: currentMeetingId };
+  currentMeetingId++;
+
+  meetings.push(newMeeting);
+
+  return res.status(201).json({ meeting: newMeeting });
 });
 
 module.exports = app;

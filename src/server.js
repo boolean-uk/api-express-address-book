@@ -12,10 +12,23 @@ app.use(express.json());
 
 const STATE = {
   contacts,
+  nextId:3,
 };
+
+const getNextId = () => {
+    return STATE.nextId++
+}
 
 app.get("/contacts", (req, res) => {
   res.json({ contacts: STATE.contacts });
+});
+
+app.post("/contacts", (req,res) => {
+    const count = STATE.contacts.push(req.body)
+    const newContact = {contact: STATE.contacts [count -1]}
+    newContact.contact.id = getNextId();
+    res.status(201).json(newContact);
+
 });
 
 module.exports = app;

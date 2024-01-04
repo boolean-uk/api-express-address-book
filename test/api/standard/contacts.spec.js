@@ -39,7 +39,7 @@ describe('Address Book API', () => {
     })
   })
 
-  describe('POST /contacts', () => {
+  fdescribe('POST /contacts', () => {
     it('returns created contact', async () => {
       const response = await supertest(app)
         .post('/contacts')

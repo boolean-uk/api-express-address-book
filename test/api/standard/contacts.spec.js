@@ -71,7 +71,7 @@ describe('Address Book API', () => {
     })
   })
 
-  fdescribe('PUT /contacts', () => {
+  describe('PUT /contacts', () => {
     let updatedContact
     beforeEach(() => {
       updatedContact = {

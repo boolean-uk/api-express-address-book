@@ -50,12 +50,28 @@ app.put('/contacts/:id', (req, res) => {
     if (!foundContact) {
         return res.status(404).json({ error: `No such contact with id: ${id}` });
     }
-    
+
     const updates = req.body;
     Object.assign(foundContact, updates);
 
     return res.status(200).json({ contact: foundContact }); 
 });
+
+// Delete request and removes contact
+app.delete('/contacts/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const foundContactIndex = contacts.findIndex(contact => contact.id === id);
+
+    if (foundContactIndex === -1) {
+        return res.status(404).json({ error: `No such contact with id: ${id}` });
+    }
+
+    const deletedContact = contacts.splice(foundContactIndex, 1)[0];
+
+    return res.status(200).json({ contact: deletedContact });
+});
+
+
 
 
 module.exports = app;

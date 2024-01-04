@@ -1,3 +1,5 @@
+let idCounter = 3
+
 const contacts = [
   {
     "id": 1,
@@ -23,4 +25,4 @@ const contacts = [
   }
 ]
 
-module.exports = contacts
+module.exports = {contacts, idCounter}

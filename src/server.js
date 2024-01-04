@@ -6,7 +6,7 @@ const contacts = require("../data/contacts.js")
 const meetings = require("../data/meetings.js")
 
 const { createContact, formatContact, findContact, removeContact, updateContact } = require("./contactFunctions.js")
-const { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings, createMeeting } = require("./meetingFunctions.js")
+const { findMeeting, formatMeeting, removeMeeting, removeContactMeetings, updateMeeting, getContactMeetings, createMeeting } = require("./meetingFunctions.js")
 
 app.use(morgan("dev"))
 app.use(cors())
@@ -36,11 +36,7 @@ app.get("/contacts/:id", (req, res) => {
 app.delete("/contacts/:id", (req, res) => {
     const foundContact = findContact(req, res, contacts)
     removeContact(contacts, foundContact)
-    meetings.map(meeting => {
-        if (Number(meeting.contactId) === foundContact.id) {
-            removeMeeting(meetings, meeting)
-        }
-    })
+    removeContactMeetings(meetings, foundContact)
     return res.status(200).json(formatContact(foundContact))
 })
 

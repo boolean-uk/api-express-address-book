@@ -17,6 +17,14 @@ const removeMeeting = (data, meeting) => {
     data.splice(meetingIndex, 1)
 }
 
+const removeContactMeetings = (data, contact) => {
+    data.map(meeting => {
+        if (Number(meeting.contactId) === contact.id) {
+            removeMeeting(data, meeting)
+        }
+    })
+}
+
 const updateMeeting = (req, meeting) => {
     const { name } = req.body
     meeting.name = name
@@ -47,4 +55,4 @@ const createMeeting = (req, contact, currentMeetingId, data) => {
     return newMeeting
 }
 
-module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings, createMeeting }
+module.exports = { findMeeting, formatMeeting, removeMeeting, removeContactMeetings, updateMeeting, getContactMeetings, createMeeting }

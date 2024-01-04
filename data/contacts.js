@@ -32,7 +32,8 @@ const getNewContactId = () => ++contactId
 const getContactById = (id) => contacts.find((contact) => contact.id === id)
 const deleteContactById = (id) => contacts.filter((contact) => contact.id !== id)
 
-const addContact = (
+const addContact = (body) => {
+  const {
     firstName,
     lastName,
     street,
@@ -41,16 +42,17 @@ const addContact = (
     email,
     linkedin,
     twitter
-) => {
+  } = body
+  
   const newContact = new Contact(
-    firstName,
-    lastName,
-    street,
-    city,
-    type,
-    email,
-    linkedin,
-    twitter
+      firstName,
+      lastName,
+      street,
+      city,
+      type,
+      email,
+      linkedin,
+      twitter
     )
   contacts.push(newContact)
   return newContact

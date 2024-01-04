@@ -38,4 +38,15 @@ const getContactMeetings = (contact, data) => {
     return contactMeetings
 }
 
-module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings }
+const createMeeting = (req, contact, currentMeetingId, data) => {
+    const { name } = req.body
+    const newMeeting = {
+        name: name,
+        contactId: contact.id,
+        id: ++currentMeetingId
+    }
+    data.push(newMeeting)
+    return newMeeting
+}
+
+module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings, createMeeting }

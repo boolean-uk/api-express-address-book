@@ -4,7 +4,7 @@ const cors = require("cors")
 const app = express()
 const data = require("../data/contacts.js")
 
-const { formatContact, findContact, removeContact } = require("./functions.js")
+const { formatContact, findContact, removeContact, updateContact } = require("./functions.js")
 
 app.use(morgan("dev"))
 app.use(cors())
@@ -57,10 +57,20 @@ app.get("/contacts/:id", (req, res) => {
 app.delete("/contacts/:id", (req, res) => {
 
     const foundContact = findContact(req.params.id, res, data)
-    
+
     removeContact(data, foundContact)
     
     return res.status(200).json(formatContact(foundContact))
+})
+
+// UPDATE A CONTACT
+app.put("/contacts/:id", (req, res) => {
+
+    const contact = findContact(req.params.id, res, data)
+
+    updateContact(req, contact)
+
+    return res.status(200).json(formatContact(contact))
 })
 
 module.exports = app

@@ -20,4 +20,19 @@ const removeContact = (data, contact) => {
     data.splice(contactIndex, 1)
 }
 
-module.exports = { formatContact, findContact, removeContact }
+const updateContact = (req, contact) => {
+    const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
+
+    contact.firstName = firstName
+    contact.lastName = lastName
+    contact.street = street
+    contact.city = city
+    contact.type = type
+    contact.email = email
+    contact.linkedin = linkedin
+    contact.twitter = twitter
+
+    return contact
+}
+
+module.exports = { formatContact, findContact, removeContact, updateContact }

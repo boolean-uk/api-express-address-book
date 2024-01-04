@@ -110,4 +110,13 @@ app.put("/meetings/:meetingId", (req, res) => {
   return res.status(200).json({ meeting });
 });
 
+app.delete("/meetings/:meetingId", (req, res) => {
+  const meeting = findMeeting(req, res);
+
+  const meetingIndex = meetings.indexOf(meeting);
+  meetings.splice(meetingIndex, 1);
+
+  return res.status(200).json({ meeting });
+});
+
 module.exports = app;

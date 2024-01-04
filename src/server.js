@@ -5,7 +5,7 @@ const cors = require("cors");
 const meetings = require('../data/meetings.js')
 const { contacts } = require("../data/contacts.js");
 let { idCounter } = require("../data/contacts.js");
-const {foundContactById, foundMeetingById} = require("./client.js");
+const {findContactById, findMeetingById, findMeetingsByContactId} = require("./client.js");
 const app = express();
 
 app.use(morgan("dev"));
@@ -31,12 +31,12 @@ app.post("/contacts", (req, res) => {
 });
 
 app.get("/contacts/:id", (req, res) => {
-    const foundContact = foundContactById(req, res);
+    const foundContact = findContactById(req, res);
     return res.status(200).json({ contact: foundContact });
 });
 
 app.delete("/contacts/:id", (req, res) => {
-    const foundContact = foundContactById(req, res);
+    const foundContact = findContactById(req, res);
 
     if (foundContact) {
         const foundContactIndex = contacts.indexOf(foundContact);
@@ -47,7 +47,7 @@ app.delete("/contacts/:id", (req, res) => {
 });
 
 app.put('/contacts/:id', (req, res) => {
-    const foundContact = foundContactById(req, res)
+    const foundContact = findContactById(req, res)
 
     if(foundContact) {
         const { firstName, lastName, street, city, type, email, linkedin, twitter} = req.body;
@@ -73,12 +73,12 @@ app.get('/meetings', (req, res) => {
 })
 
 app.get('/meetings/:id', (req, res) => {
-    const foundMeeting = foundMeetingById(req, res)
+    const foundMeeting = findMeetingById(req, res)
     return res.status(200).json({meeting: foundMeeting})
 })
 
 app.delete('/meetings/:id', (req, res) => {
-    const foundMeetingToDelete = foundMeetingById(req, res)
+    const foundMeetingToDelete = findMeetingById(req, res)
 
     if(foundMeetingToDelete) {
         const foundMeetingIndex = meetings.indexOf(foundMeetingToDelete)
@@ -88,7 +88,7 @@ app.delete('/meetings/:id', (req, res) => {
 })
 
 app.put('/meetings/:id', (req, res) => {
-    const foundMeetingToUpdate = foundMeetingById(req, res)
+    const foundMeetingToUpdate = findMeetingById(req, res)
 
     if (foundMeetingToUpdate) {
         const { name } = req.body
@@ -96,6 +96,11 @@ app.put('/meetings/:id', (req, res) => {
         foundMeetingToUpdate.name = name
     }
     return res.status(200).json({meeting: foundMeetingToUpdate})
+})
+
+app.get('/contacts/:id/meetings', (req, res) => {
+    const foundMeetings = findMeetingsByContactId(req, res)
+    return res.status(200).json({meeting: foundMeetings})
 })
 
 

@@ -1,56 +1,77 @@
-//import contacts  from "../data/contacts"
-const contacts = require('../data/contacts')
+const contacts = require("../data/contacts");
 
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const app = express();
 
-const express = require("express")
-const morgan = require("morgan")
-const cors = require("cors")
-const app = express()
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
 
-app.use(morgan("dev"))
-app.use(cors())
-app.use(express.json())
-
-
-
-// write your app code here
-
-
-app.get('/contacts', (req , res) => {
-    res.status(200).json({"contacts":contacts})
-})
+app.get("/contacts", (req, res) => {
+  res.status(200).json({ contacts: contacts });
+});
 
 // create contacts
-let newId = contacts.length+1
+let newId = contacts.length + 1;
 
-app.post('/contacts', (req,res) => {
-    const contact = req.body
- const newContact= {
+app.post("/contacts", (req, res) => {
+  const contact = req.body;
+  const newContact = {
     ...contact,
-    id : newId++
- }
+    id: newId++,
+  };
 
- contacts.push(newContact)
- res.status(201).json({newContact})
-})
+  contacts.push(newContact);
+  res.status(201).json({ contact: newContact });
+});
 
 // get a single contact by id
 
-app.get('/contacts/:id', (req , res)  => {
+app.get("/contacts/:id", (req, res) => {
+  const contactsId = Number(req.params.id);
+  const findContacts = contacts.find((contact) => contact.id === contactsId);
+  res.status(200).json({ contact: findContacts });
+});
 
-    const contactsId = Number(req.params.id)
-    const findContacts = contacts.find((contact) => contact.id === contactsId)
-    res.status(200).json({contact:findContacts})
-})
+app.delete("/contacts/:id", (req, res) => {
+  const contactsId = Number(req.params.id);
+  const findContacts = contacts.find((contact) => contact.id === contactsId);
+  const contactIndex = contacts.indexOf(findContacts);
+  contacts.splice(contactIndex, 1);
 
-app.delete('/contacts/:id', (req,res) => {
-    const contactsId = Number(req.params.id)
-    const findContacts = contacts.find((contact) => contact.id === contactsId)
-    const contactIndex = contacts.indexOf(findContacts)
-    contacts.splice(contactIndex, 1)
+  res.status(200).json({ contact: findContacts });
+});
 
-    res.status(200).json({contact: findContacts})
-})
+//updated contact by Id
 
+app.put("/contacts/:id", (req, res) => {
+  const contactsId = Number(req.params.id);
+  const findContacts = contacts.find((contact) => contact.id === contactsId);
 
-module.exports = app
+  if (findContacts) {
+    const {
+      firstName,
+      lastName,
+      street,
+      city,
+      type,
+      email,
+      linkedin,
+      twitter,
+    } = req.body;
+    findContacts.firstName = firstName;
+    findContacts.lastName = lastName;
+    findContacts.street = street;
+    findContacts.city = city;
+    findContacts.type = type;
+    findContacts.email = email;
+    findContacts.linkedin = linkedin;
+    findContacts.twitter = twitter;
+
+    return res.status(200).json({ contact: findContacts });
+  }
+});
+
+module.exports = app;

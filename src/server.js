@@ -19,7 +19,6 @@ app.get("/contacts", (req, res) => {
     const allContacts = {
         "contacts": data
     }
-
     return res.status(200).json(allContacts)
 })
 
@@ -27,7 +26,6 @@ app.get("/contacts", (req, res) => {
 app.post("/contacts", (req, res) => {
 
     const { firstName, lastName, street, city, type, email, linkedin, twitter } = req.body
-
     const newContact = {
         id: ++currentId,
         firstName,
@@ -39,9 +37,7 @@ app.post("/contacts", (req, res) => {
         linkedin,
         twitter
     }
-
     data.push(newContact)
-
     return res.status(201).json(formatContact(newContact))
 })
 
@@ -49,27 +45,22 @@ app.post("/contacts", (req, res) => {
 app.get("/contacts/:id", (req, res) => {
 
     const foundContact = findContact(req.params.id, res, data)
-
     return res.status(200).json(formatContact(foundContact))
 })
 
 // DELETE CONTACT BY ID
 app.delete("/contacts/:id", (req, res) => {
-
-    const foundContact = findContact(req.params.id, res, data)
-
-    removeContact(data, foundContact)
     
+    const foundContact = findContact(req.params.id, res, data)
+    removeContact(data, foundContact)
     return res.status(200).json(formatContact(foundContact))
 })
 
-// UPDATE A CONTACT
+// UPDATE A CONTACT BY ID
 app.put("/contacts/:id", (req, res) => {
 
     const contact = findContact(req.params.id, res, data)
-
     updateContact(req, contact)
-
     return res.status(200).json(formatContact(contact))
 })
 

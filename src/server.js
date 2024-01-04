@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const contacts = require("../data/contacts.js");
+const meetings = require("../data/meetings.js");
 
 const app = express();
 
@@ -12,11 +13,17 @@ app.use(express.json());
 
 const STATE = {
   contacts,
-  nextId: 3,
+  nextContactId: 3,
+  meetings,
+  nextMeetingId: 3,
 };
 
-const getNextId = () => {
-  return STATE.nextId++;
+const getNextContactId = () => {
+  return STATE.nextContactId++;
+};
+
+const getNextMeetingId = () => {
+  return STATE.nextMeetingId++;
 };
 
 const findContactIndex = (req) => {
@@ -34,7 +41,7 @@ app.get("/contacts", (req, res) => {
 app.post("/contacts", (req, res) => {
   const count = STATE.contacts.push(req.body);
   const newContact = { contact: STATE.contacts[count - 1] };
-  newContact.contact.id = getNextId();
+  newContact.contact.id = getNextContactId();
   res.status(201).json(newContact);
 });
 
@@ -51,7 +58,10 @@ app.delete("/contacts/:id", (req, res) => {
 
 app.put("/contacts/:id", (req, res) => {
   const foundIndex = findContactIndex(req);
-  foundContact = STATE.contacts[foundIndex] = {...req.body, id: req.params.id * 1};
+  foundContact = STATE.contacts[foundIndex] = {
+    ...req.body,
+    id: req.params.id * 1,
+  };
 
   res.json({ contact: foundContact });
 });

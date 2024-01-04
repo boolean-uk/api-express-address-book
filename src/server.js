@@ -129,7 +129,7 @@ app.put("/meetings/:id", (req, res) => {
   if (!foundMeeting)
     return res
       .status(404)
-      .json(`No meeting found with id ${id} - could not update.1`);
+      .json(`No meeting found with id ${id} - could not update.`);
 
   foundMeeting.name = updatedMeeting.name
 

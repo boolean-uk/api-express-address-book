@@ -99,4 +99,16 @@ app.get('/contacts/:id/meetings', (req, res) => {
 	return res.json({"meetings": meetingsForContact})
 })
 
+app.post('/contacts/:id/meetings', (req, res) => {
+	const id = meetings.length + 1
+	const contactId = getIdFromParams(req.params)
+	const newMeeting = req.body
+
+	newMeeting.id = id
+	newMeeting.contactId = contactId
+
+	meetings.push(newMeeting)
+
+	return res.status(201).json({"meeting": newMeeting})
+})
 module.exports = app;

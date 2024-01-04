@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
-const { meetings } = require('../data/meetings.js')
+const meetings = require('../data/meetings.js')
 const { contacts } = require("../data/contacts.js");
 let { idCounter } = require("../data/contacts.js");
 const foundContactById = require("./client.js");

@@ -8,6 +8,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
+// CORE
 const findContactBy = (id) => contacts.find((contact) => contact.id === id);
 const getIdFromParams = (params) => {
   const { id } = params;
@@ -50,11 +51,12 @@ app.put("/contacts/:id", (req, res) => {
   const index = contacts.indexOf(foundContact);
 	const updatedContact = req.body;
 
-
 	updatedContact.id = id;
 	contacts.splice(index, 1, updatedContact)
 
 	return res.json({"contact": updatedContact})
 });
+
+// EXTENSION
 
 module.exports = app;

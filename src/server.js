@@ -5,6 +5,7 @@ const app = express();
 
 const contacts = require("../data/contacts.js");
 const createTestFormData = require("../test/fixtures/contacts/createTestFormData.js");
+const updateTestFormData = require("../test/fixtures/contacts/updateTestFormData.js");
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -49,12 +50,27 @@ app.post("/contacts", (req, res) => {
 
 app.delete("/contacts/:contactId", (req, res) => {
   const contact = findContact(req, res);
-//   const contactId = Number(req.params.contactId);
+  //   const contactId = Number(req.params.contactId);
 
   const findIndex = contacts.indexOf(contact);
   contacts.splice(findIndex, 1);
 
-  res.json({contact});
+  res.json({ contact });
+});
+
+app.put("/contacts/:contactId", (req, res) => {
+  const contact = findContact(req, res);
+
+  contact.firstName = updateTestFormData.firstName;
+  contact.lastName = updateTestFormData.lastName;
+  contact.street = updateTestFormData.street;
+  contact.city = updateTestFormData.city;
+  contact.type = updateTestFormData.type;
+  contact.email = updateTestFormData.email;
+  contact.linkedin = updateTestFormData.linkedin;
+  contact.twitter = updateTestFormData.twitter;
+
+  res.status(200).json({ contact });
 });
 
 module.exports = app;

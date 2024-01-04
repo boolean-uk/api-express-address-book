@@ -4,6 +4,8 @@ const cors = require("cors")
 const app = express()
 const data = require("../data/contacts.js")
 
+const {formatContact, findContact} = require("./functions.js")
+
 app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
@@ -38,25 +40,16 @@ app.post("/contacts", (req, res) => {
 
     data.push(newContact)
 
-    const returnedContact = {
-        "contact": newContact
-    }
-
-    return res.status(201).json(returnedContact)
+    return res.status(201).json(formatContact(newContact))
 })
 
 app.get("/contacts/:id", (req, res) => {
-    const contactId = Number(req.params.id)
 
-    const foundContact = data.find(contact => contact.id === contactId)
+    const foundContact = findContact(req.params.id, data)
 
     if (!foundContact) return res.status(404).json(`Contact with id ${contactId} does not exist`)
 
-    const contactToReturn = {
-        "contact": foundContact
-    }
-
-    return res.status(200).json(contactToReturn)
+    return res.status(200).json(formatContact(foundContact))
 })
 
 module.exports = app

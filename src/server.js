@@ -26,7 +26,7 @@ app.post('/contacts', (req, res) => {
 
     contacts.push(newContact)
 
-    return res.status(201).json({contacts: newContact})
+    return res.status(201).json({contact: newContact})
 })
 
 

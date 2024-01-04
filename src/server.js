@@ -11,13 +11,18 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
 
+
+
 // write your app code here
 
 
 app.get('/contacts', (req , res) => {
     res.status(200).json({"contacts":contacts})
 })
-let newId= contacts.length
+
+
+let newId = contacts.length+1
+
 app.post('/contacts', (req,res) => {
     const contact = req.body
  const newContact= {

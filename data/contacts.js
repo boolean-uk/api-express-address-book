@@ -26,7 +26,7 @@ const contacts = [
 let contactId = 0
 
 const getNewContactId = () => ++contactId
-const getContactById = (id) => contacts.find((contact) => contacts.id === id)
+const getContactById = (id) => contacts.find((contact) => contact.id === id)
 const deleteContactById = (id) => contacts.filter((contact) => contact.id !== id)
 
 const addContact = (

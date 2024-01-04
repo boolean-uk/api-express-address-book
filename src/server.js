@@ -43,6 +43,7 @@ app.get('/contacts/:id', (req , res)  => {
     res.status(200).json({contact:findContacts})
 })
 
+// delete a single  contact by Id
 app.delete('/contacts/:id', (req,res) => {
     const contactsId = Number(req.params.id)
     const findContacts = contacts.find((contact) => contact.id === contactsId)

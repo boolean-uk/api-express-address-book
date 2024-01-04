@@ -236,10 +236,6 @@ components:
           type: string
         twitter:
           type: string
-        meetings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Meeting'
     ContactPost:
       type: object
       properties:

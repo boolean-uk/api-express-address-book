@@ -2,7 +2,7 @@ const express = require("express")
 const morgan = require("morgan")
 const cors = require("cors")
 
-const contacts = require('./data.js')
+const contacts = require('../data/contacts.js')
 const app = express()
 
 app.use(morgan("dev"))
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/contacts', (req, res) => {
-    return res.status(200).json(contacts)
+    return res.status(200).json({contacts: contacts})
 })
 
 

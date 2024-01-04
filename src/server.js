@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 const contacts = require("../data/contacts");
+const meetings = require("../data/meetings")
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -58,5 +59,7 @@ app.put("/contacts/:id", (req, res) => {
 });
 
 // EXTENSION
+
+app.get('/meetings', (req, res) => (res.json({"meetings": meetings})))
 
 module.exports = app;

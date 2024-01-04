@@ -18,9 +18,8 @@ Before you begin, the API is going to use global variables to hold data - which 
 
 ### Set up
 1. Fork and clone this repository
-2. Fork and clone the client app repository
-3. Create an express application following the steps above.
-4. Implement the API, starting with the `contacts` endpoint, following this workflow for **each** endpoint:
+2. Create an express application following the steps above.
+3. Implement the API, starting with the `contacts` endpoint, following this workflow for **each** endpoint:
     1. Diagram the endpoint lifecycle in a sequence diagram, using the image below these steps as a starting point
     2. Implement the endpoint
     3. Test the endpoint using any method you like; Insomnia, curl, unit tests etc.

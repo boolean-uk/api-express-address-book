@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const contacts = require("../data/contacts.js");
+const createTestFormData = require("../test/fixtures/contacts/createTestFormData.js");
 
 app.use(morgan("dev"));
 app.use(cors());
@@ -31,6 +32,29 @@ app.get("/contacts/:contactId", (req, res) => {
   const contact = findContact(req, res);
 
   res.status(200).json({ contact });
+});
+
+app.post("/contacts", (req, res) => {
+  const body = createTestFormData;
+
+  const newContact = {
+    id: ++currentID,
+    ...body,
+  };
+
+  contacts.push({ ...newContact });
+
+  res.status(201).json({ contact: newContact });
+});
+
+app.delete("/contacts/:contactId", (req, res) => {
+  const contact = findContact(req, res);
+//   const contactId = Number(req.params.contactId);
+
+  const findIndex = contacts.indexOf(contact);
+  contacts.splice(findIndex, 1);
+
+  res.json({contact});
 });
 
 module.exports = app;

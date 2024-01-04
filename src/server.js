@@ -19,6 +19,14 @@ const getNextId = () => {
   return STATE.nextId++;
 };
 
+const findContactIndex = (req) => {
+  const { id } = req.params;
+  const foundIndex = STATE.contacts.findIndex(
+    (contact) => contact.id === id * 1
+  );
+  return foundIndex;
+};
+
 app.get("/contacts", (req, res) => {
   res.json({ contacts: STATE.contacts });
 });
@@ -31,10 +39,7 @@ app.post("/contacts", (req, res) => {
 });
 
 app.get("/contacts/:id", (req, res) => {
-  const { id } = req.params;
-  const foundIndex = STATE.contacts.findIndex(
-    (contact) => contact.id === id * 1
-  );
+  const foundIndex = findContactIndex(req);
   res.json({ contact: STATE.contacts[foundIndex] });
 });
 

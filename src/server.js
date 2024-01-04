@@ -32,7 +32,7 @@ const findMeeting = (req, res) => {
 
   const foundMeeting = meetings.find((meeting) => meeting.id === meetingId);
 
-  foundMeeting.contactId.toString()
+  foundMeeting.contactId.toString();
 
   if (!foundMeeting) {
     res.status(404).json({ message: `no such meeting with id: ${meetingId}` });
@@ -107,7 +107,7 @@ app.put("/meetings/:meetingId", (req, res) => {
   const { name } = req.body;
 
   meeting.name = name;
-  res.status(200).json({ meeting });
+  return res.status(200).json({ meeting });
 });
 
 module.exports = app;

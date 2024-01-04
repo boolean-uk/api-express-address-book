@@ -101,4 +101,10 @@ app.put("/meetings/:id", (req, res) => {
   res.json({meeting: foundMeeting})
 })
 
+app.get("/contacts/:id/meetings", (req,res) => {
+  const foundContactIndex = findStateIndex(STATE.contacts, req)
+  const foundMeetings = STATE.meetings.filter(meeting => meeting.contactId === Number(req.params.id))
+  res.json({meetings: foundMeetings})
+})
+
 module.exports = app;

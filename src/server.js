@@ -93,4 +93,12 @@ app.delete("/meetings/:id", (req, res) => {
   res.json({ meeting: removedMeeting });
 });
 
+app.put("/meetings/:id", (req, res) => {
+  const foundMeetingIndex = findStateIndex(STATE.meetings, req)
+  const foundMeeting = STATE.meetings[foundMeetingIndex]
+
+  foundMeeting.name = req.body.name
+  res.json({meeting: foundMeeting})
+})
+
 module.exports = app;

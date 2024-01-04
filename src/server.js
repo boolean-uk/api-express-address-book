@@ -12,6 +12,14 @@ app.use(express.json());
 // CORE
 const findContactBy = (id) => contacts.find((contact) => contact.id === id);
 const findMeetingBy = (id) => meetings.find((meeting) => meeting.id === id);
+const deleteMeetingsBy = (contactId) => {
+	meetings.forEach((meeting) => {
+		if (meeting.contactId === contactId) {
+			const index = meetings.indexOf(meeting)
+			meetings.splice(index, 1)
+		}
+	})
+}
 
 const getIdFromParams = (params) => {
   const { id } = params;
@@ -44,6 +52,9 @@ app.delete("/contacts/:id", (req, res) => {
   const index = contacts.indexOf(foundContact);
 
   contacts.splice(index, 1);
+
+	// EXTENSION CRITERIA (deleting a contact also delete their meetings)
+	deleteMeetingsBy(id)
 
   return res.json({ contact: foundContact });
 });
@@ -111,4 +122,5 @@ app.post('/contacts/:id/meetings', (req, res) => {
 
 	return res.status(201).json({"meeting": newMeeting})
 })
+
 module.exports = app;

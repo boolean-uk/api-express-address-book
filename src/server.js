@@ -19,8 +19,17 @@ const appState = {
   nextMeetingId: 4,
 };
 
+// Function to generate the next contact ID
+const generateNextContactId = () => appState.nextContactId++;
+
 app.get("/contacts", (req, res) => {
   res.json({ contacts: appState.contacts });
+});
+
+app.post("/contacts", (req, res) => {
+  const newContact = { contact: { ...req.body, id: generateNextContactId() } };
+  appState.contacts.push(newContact.contact);
+  res.status(201).json(newContact);
 });
 
 module.exports = app;

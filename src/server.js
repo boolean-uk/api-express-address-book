@@ -22,6 +22,9 @@ const appState = {
 // Function to generate the next contact ID
 const generateNextContactId = () => appState.nextContactId++;
 
+// Function to generate the next meeting ID
+const generateNextMeetingId = () => appState.nextMeetingId++;
+
 // Function to find an array index by ID
 const findIndexById = (array, req) => {
   const { id } = req.params;

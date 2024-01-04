@@ -5,7 +5,7 @@ const cors = require("cors");
 const meetings = require('../data/meetings.js')
 const { contacts } = require("../data/contacts.js");
 let { idCounter } = require("../data/contacts.js");
-const foundContactById = require("./client.js");
+const {foundContactById, foundMeetingById} = require("./client.js");
 const app = express();
 
 app.use(morgan("dev"));
@@ -67,6 +67,11 @@ app.put('/contacts/:id', (req, res) => {
 
 app.get('/meetings', (req, res) => {
     return res.status(200).json({ meetings: meetings })
+})
+
+app.get('/meetings/:id', () => {
+    const foundMeeting = foundMeetingById(req, res)
+    return res.status(200).json({meeting: foundMeeting})
 })
 
 module.exports = app;

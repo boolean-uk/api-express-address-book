@@ -13,6 +13,11 @@ app.get('/contacts', (req, res) => {
   return res.json({ contacts })
 })
 
+app.get('/contacts/:id', (req, res) => {
+  const { id } = Number(req.params)
+  return res.json( { contact: getContactById(id) })
+})
+
 app.post('/contacts', (req, res) => {
   const contact = addContact(
     "string",

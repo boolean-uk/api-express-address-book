@@ -1,5 +1,5 @@
 const {contacts} = require('../data/contacts.js')
-const meetings = require('../data/meetings.js')
+const { meetings } = require('../data/meetings.js')
 
 function findContactById (req, res) {
     const contactId = Number(req.params.id)

@@ -46,6 +46,9 @@ app.delete("/contacts/:id", (req, res) => {
     if (foundContact) {
         const foundContactIndex = contacts.indexOf(foundContact);
         contacts.splice(foundContactIndex, 1);
+        
+        const newMeetings = meetings.filter((meetings) => meetings.contactId !== foundContact.id)
+        meetings.splice(0, meetings.length, newMeetings)
     }
 
     res.status(200).json({ contact: foundContact });
@@ -113,18 +116,19 @@ app.put("/meetings/:id", (req, res) => {
 
 app.get("/contacts/:id/meetings", (req, res) => {
     const foundMeetings = findMeetingsByContactId(req, res);
-    return res.status(200).json({ meeting: foundMeetings });
+    console.log(foundMeetings)
+    return res.status(200).json({ meetings: foundMeetings });
 });
 
 app.post("/contacts/:id/meetings", (req, res) => {
-    const contactId = req.params.id;
+    const contactId = Number(req.params.id);
     let newMeeting = req.body;
     newMeeting = {  ...newMeeting, contactId: contactId, id: meetingsIdCounter };
     meetingsIdCounter++;
 
     meetings.push(newMeeting)
 
-    return res.status(201).json({ meetings: newMeeting });
+    return res.status(201).json({ meeting: newMeeting });
 });
 
 module.exports = app;

@@ -42,6 +42,7 @@ app.post("/contacts", (req, res) => {
 app.get("/contacts/:id", (req, res) => {
   const id = getIdFromParams(req.params);
   const foundContact = findContactBy(id);
+  if (!foundContact) return res.status(404).json('No such contact found')
   return res.json({ contact: foundContact });
 });
 

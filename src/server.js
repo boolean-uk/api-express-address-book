@@ -79,7 +79,7 @@ app.delete("/contacts/:contactId", (req, res) => {
     meetings.splice(0, meetings.length, newMeetings);
   }
 
-  res.status(200).json({ contact: foundContact });
+  res.status(200).json({ contact });
 });
 
 app.put("/contacts/:contactId", (req, res) => {

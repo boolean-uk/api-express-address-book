@@ -14,7 +14,16 @@ app.get('/contacts', (req, res) => {
 })
 
 app.post('/contacts', (req, res) => {
-  const contact = addContact("string","string","string", "string","string","string","string","string")
+  const contact = addContact(
+    "string",
+    "string",
+    "string",
+    "string",
+    "string",
+    "string",
+    "string",
+    "string"
+  )
   return res.status(201).json( { contact }) 
 })
 

@@ -24,8 +24,8 @@ const formatContact = (contact) => {
     return response
 }
 
-const findContact = (idParam, res, data) => {
-    const contactId = Number(idParam)
+const findContact = (req, res, data) => {
+    const contactId = Number(req.params.id)
     const foundContact = data.find(contact => contact.id === contactId)
 
     if (!foundContact) return res.status(404).json(`Contact with id ${contactId} does not exist`)

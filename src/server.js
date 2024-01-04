@@ -6,7 +6,7 @@ const data = require("../data/contacts.js")
 const meetings = require("../data/meetings.js")
 
 const { createContact, formatContact, findContact, removeContact, updateContact } = require("./functions.js")
-const { findMeeting, formatMeeting, removeMeeting, updateMeeting } = require("./meetingFunctions.js")
+const { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings } = require("./meetingFunctions.js")
 
 app.use(morgan("dev"))
 app.use(cors())
@@ -34,14 +34,14 @@ app.post("/contacts", (req, res) => {
 // FIND CONTACT BY ID
 app.get("/contacts/:id", (req, res) => {
 
-    const foundContact = findContact(req.params.id, res, data)
+    const foundContact = findContact(req, res, data)
     return res.status(200).json(formatContact(foundContact))
 })
 
 // DELETE CONTACT BY ID
 app.delete("/contacts/:id", (req, res) => {
     
-    const foundContact = findContact(req.params.id, res, data)
+    const foundContact = findContact(req, res, data)
     removeContact(data, foundContact)
     meetings.map(meeting => {
         if (Number(meeting.contactId) === foundContact.id) {
@@ -54,7 +54,7 @@ app.delete("/contacts/:id", (req, res) => {
 // UPDATE A CONTACT BY ID
 app.put("/contacts/:id", (req, res) => {
 
-    const contact = findContact(req.params.id, res, data)
+    const contact = findContact(req, res, data)
     updateContact(req, contact)
     return res.status(200).json(formatContact(contact))
 })
@@ -85,10 +85,18 @@ app.delete("/meetings/:id", (req, res) => {
 
 // UPDATE MEETING BY ID
 app.put("/meetings/:id", (req, res) => {
-    
+
     const meeting = findMeeting(req, res, meetings)
     updateMeeting(req, meeting)
     return res.status(200).json(formatMeeting(meeting))
+})
+
+// GET MEETING FOR CONTACT
+app.get("/contacts/:id/meetings", (req, res) => {
+    
+    const contact = findContact(req, res, data)
+    const contactMeetings = getContactMeetings(contact, meetings)
+    return res.status(200).json(contactMeetings)
 })
 
 module.exports = app

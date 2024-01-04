@@ -25,4 +25,17 @@ const updateMeeting = (req, meeting) => {
     return meeting
 }
 
-module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting }
+const getContactMeetings = (contact, data) => {
+    const associatedMeetings = []
+    data.map(meeting => {
+        if (Number(meeting.contactId) === contact.id) {
+            associatedMeetings.push(meeting)
+        }
+    })
+    const contactMeetings = {
+        "meetings": associatedMeetings
+    }
+    return contactMeetings
+}
+
+module.exports = { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings }

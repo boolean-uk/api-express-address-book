@@ -57,7 +57,9 @@ app.delete("/contacts/:id", (req, res) => {
   const foundContactIndex = findStateIndex(STATE.contacts, req);
   const [removedContact] = STATE.contacts.splice(foundContactIndex, 1);
 
-  STATE.meetings = STATE.meetings.filter(meeting => meeting.contactId !== Number(req.params.id))
+  STATE.meetings = STATE.meetings.filter(
+    (meeting) => meeting.contactId !== Number(req.params.id)
+  );
 
   res.json({ contact: removedContact });
 });
@@ -94,17 +96,19 @@ app.delete("/meetings/:id", (req, res) => {
 });
 
 app.put("/meetings/:id", (req, res) => {
-  const foundMeetingIndex = findStateIndex(STATE.meetings, req)
-  const foundMeeting = STATE.meetings[foundMeetingIndex]
+  const foundMeetingIndex = findStateIndex(STATE.meetings, req);
+  const foundMeeting = STATE.meetings[foundMeetingIndex];
 
-  foundMeeting.name = req.body.name
-  res.json({meeting: foundMeeting})
-})
+  foundMeeting.name = req.body.name;
+  res.json({ meeting: foundMeeting });
+});
 
-app.get("/contacts/:id/meetings", (req,res) => {
-  const foundContactIndex = findStateIndex(STATE.contacts, req)
-  const foundMeetings = STATE.meetings.filter(meeting => meeting.contactId === Number(req.params.id))
-  res.json({meetings: foundMeetings})
-})
+app.get("/contacts/:id/meetings", (req, res) => {
+  const foundContactIndex = findStateIndex(STATE.contacts, req);
+  const foundMeetings = STATE.meetings.filter(
+    (meeting) => meeting.contactId === Number(req.params.id)
+  );
+  res.json({ meetings: foundMeetings });
+});
 
 module.exports = app;

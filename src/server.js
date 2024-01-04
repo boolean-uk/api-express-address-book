@@ -79,4 +79,9 @@ app.get("/meetings", (req, res) => {
   res.json({ meetings: STATE.meetings });
 });
 
+app.get("/meetings/:id", (req, res) => {
+  const foundIndex = findStateIndex(STATE.meetings, req);
+  res.json({ meeting: STATE.meetings[foundIndex] });
+});
+
 module.exports = app;

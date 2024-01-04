@@ -1,15 +1,24 @@
-const express = require("express")
-const morgan = require("morgan")
-const cors = require("cors")
-const app = express()
-const contactsData = require("../data/contacts")
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const app = express();
+const contacts = require("../data/contacts");
 
-app.use(morgan("dev"))
-app.use(cors())
-app.use(express.json())
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
 
-app.get('/contacts', (req, res) => {
-    return res.json({"contacts": contactsData})
-})
+app.get("/contacts", (req, res) => {
+  return res.json({ contacts: contacts });
+});
 
-module.exports = app
+app.post("/contacts", (req, res) => {
+  const newContact = req.body;
+
+	newContact.id = contacts.length + 1;
+  contacts.push(newContact)
+	
+  return res.status(201).json({ "contact": newContact });
+});
+
+module.exports = app;

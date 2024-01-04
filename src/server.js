@@ -20,7 +20,7 @@ app.get('/contacts', (req , res) => {
     res.status(200).json({"contacts":contacts})
 })
 
-
+// create contacts
 let newId = contacts.length+1
 
 app.post('/contacts', (req,res) => {
@@ -32,6 +32,15 @@ app.post('/contacts', (req,res) => {
 
  contacts.push(newContact)
  res.status(201).json({newContact})
+})
+
+// get a single contact by id
+
+app.get('/contacts/:id', (req , res)  => {
+
+    const contactsId = Number(req.params.id)
+    const findContacts = contacts.find((contact) => contact.id === contactsId)
+    res.status(200).json({contact:findContacts})
 })
 
 

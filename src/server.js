@@ -11,6 +11,8 @@ app.use(express.json());
 
 // CORE
 const findContactBy = (id) => contacts.find((contact) => contact.id === id);
+const findMeetingtBy = (id) => meetings.find((meeting) => meeting.id === id);
+
 const getIdFromParams = (params) => {
   const { id } = params;
   const idNum = parseInt(id);
@@ -61,5 +63,10 @@ app.put("/contacts/:id", (req, res) => {
 // EXTENSION
 
 app.get('/meetings', (req, res) => (res.json({"meetings": meetings})))
+app.get('/meetings/:id', (req, res) => {
+	const id = getIdFromParams(req.params)
+	const foundMeeting = findMeetingtBy(id)
+	return res.json({"meeting": foundMeeting})
+})
 
 module.exports = app;

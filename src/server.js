@@ -33,4 +33,9 @@ app.post('/contacts', (req, res) => {
     return res.status(201).json({newContact})
 })
 
+app.delete('/contacts/:id', (req, res) => {
+    const contact = contacts.find((c) => c.id === Number(req.params.id))
+    res.status(200).json({contact})
+})
+
 module.exports = app

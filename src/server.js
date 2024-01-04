@@ -80,4 +80,13 @@ app.put("/meetings/:id", (req, res) => {
   res.json({ meeting: appState.meetings[foundMeetingIndex] });
 });
 
+// Endpoint to get meetings associated with a contact
+app.get("/contacts/:id/meetings", (req, res) => {
+  const foundContactIndex = findIndexById(appState.contacts, req);
+  const foundMeetings = appState.meetings.filter(
+    (meeting) => meeting.contactId === Number(req.params.id)
+  );
+  res.json({ meetings: foundMeetings });
+});
+
 module.exports = app;

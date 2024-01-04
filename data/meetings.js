@@ -1,3 +1,5 @@
+let meetingsIdCounter = 4
+
 const meetings = [
   {
     "name": "a test meeting about life",
@@ -16,4 +18,4 @@ const meetings = [
   }
 ]
 
-module.exports = meetings
+module.exports = { meetings, meetingsIdCounter }

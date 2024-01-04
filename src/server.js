@@ -5,7 +5,7 @@ const app = express()
 const data = require("../data/contacts.js")
 const meetings = require("../data/meetings.js")
 
-const { createContact, formatContact, findContact, removeContact, updateContact } = require("./functions.js")
+const { createContact, formatContact, findContact, removeContact, updateContact } = require("./contactFunctions.js")
 const { findMeeting, formatMeeting, removeMeeting, updateMeeting, getContactMeetings, createMeeting } = require("./meetingFunctions.js")
 
 app.use(morgan("dev"))
@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json())
 
 // write your app code here
-let currentId = 2
+let currentContactId = 2
 
 // GET ALL CONTACTS
 app.get("/contacts", (req, res) => {
@@ -27,7 +27,7 @@ app.get("/contacts", (req, res) => {
 // CREATE NEW CONTACT
 app.post("/contacts", (req, res) => {
 
-    const newContact = createContact(req, data, currentId)
+    const newContact = createContact(req, data, currentContactId)
     return res.status(201).json(formatContact(newContact))
 })
 

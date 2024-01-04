@@ -40,7 +40,12 @@ initContactId()
 
 const getNewContactId = () => ++contactId
 const getContactById = (id) => contacts.find((contact) => contact.id === id)
-const deleteContactById = (id) => contacts.filter((contact) => contact.id !== id)
+const deleteContactById = (id) => {
+  const index = contacts.findIndex((contact) => contact.id === id)
+  const deletedContact = contacts[index]
+  contacts.splice(index, 1)
+  return deletedContact
+}
 
 const addContact = (body) => {
   const {

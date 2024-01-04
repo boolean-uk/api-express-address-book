@@ -34,10 +34,10 @@ app.get("/contacts/:id", (req, res) => {
 
 // Post request returns created contact
 app.post("/contacts", (req, res) => {
-    const createContact = req.body;
-    createContact.id = contacts.length + 1;
-    contacts.push(createContact);
-    return res.status(201).json({createContact: createContact});
-  });
+    const newContact = req.body;
+    newContact.id = contacts.length + 1;
+    contacts.push(newContact);
+    return res.status(201).json({ contact: newContact });
+});
 
 module.exports = app;

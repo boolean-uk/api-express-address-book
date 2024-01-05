@@ -174,4 +174,19 @@ app.put('/meetings/:id', (req, res, next) => {
   }
 })
 
+// Get meetings for a specific contact
+app.get('/contacts/:id/meetings', (req, res, next) => {
+  try {
+    const findContact = findContactById(req.params.id)
+
+    const contactMeetings = meetings.filter(
+      (meeting) => meeting.contactId === findContact.id
+    )
+
+    res.status(200).json({ meetings: contactMeetings })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
+})
+
 module.exports = app

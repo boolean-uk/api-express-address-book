@@ -139,4 +139,20 @@ app.get('/meetings/:id', (req, res, next) => {
   }
 })
 
+// Delete a meeting by id
+app.delete('/meetings/:id', (req, res, next) => {
+  try {
+    const findMeeting = findMeetingById(req.params.id)
+
+    meetings.splice(
+      meetings.findIndex((meeting) => meeting.id === findMeeting.id),
+      1
+    )
+
+    res.status(200).json({ meeting: findMeeting })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
+})
+
 module.exports = app

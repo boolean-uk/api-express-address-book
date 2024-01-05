@@ -50,9 +50,11 @@ app.post('/contacts', (req, res, next) => {
     }
   }
 
-  contacts.push({ id: idCounter++, ...data })
+  const createdContact = { id: idCounter++, ...data }
 
-  res.status(201).json({ ...data })
+  contacts.push(createdContact)
+
+  res.status(201).json({ contact: createdContact })
 })
 
 // Get a single contact by id
@@ -77,6 +79,25 @@ app.delete('/contacts/:id', (req, res, next) => {
     )
 
     res.status(200).json({ contact: findContact })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
+})
+
+// Update a contact by id
+app.put('/contacts/:id', (req, res, next) => {
+  try {
+    const data = req.body
+
+    const findContact = findContactById(req.params.id)
+
+    const contactIndex = contacts.findIndex(
+      (contact) => contact.id === findContact.id
+    )
+
+    contacts[contactIndex] = { id: findContact.id, ...data }
+
+    res.status(200).json({ contact: contacts[contactIndex] })
   } catch (error) {
     res.status(error.status || 400).json({ message: error.message })
   }

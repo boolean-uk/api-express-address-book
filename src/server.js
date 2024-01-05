@@ -41,6 +41,27 @@ const findMeetingById = (id) => {
   return findMeeting
 }
 
+const findMeetingsByContact = (id) => {
+  const findContact = findContactById(id)
+
+  const contactMeetings = meetings.filter(
+    (meeting) => meeting.contactId === findContact.id
+  )
+
+  return contactMeetings
+}
+
+const deleteMeetingById = (id) => {
+  const findMeeting = findMeetingById(id)
+
+  meetings.splice(
+    meetings.findIndex((meeting) => meeting.id === findMeeting.id),
+    1
+  )
+
+  return findMeeting
+}
+
 // Retrieve a list of contacts
 app.get('/contacts', (req, res, next) => {
   if (!Array.isArray(contacts) || contacts.length === 0) {
@@ -85,12 +106,21 @@ app.get('/contacts/:id', (req, res, next) => {
 // Delete a single contact by id
 app.delete('/contacts/:id', (req, res, next) => {
   try {
-    const findContact = findContactById(req.params.id)
+    const contactId = req.params.id
+
+    const findContact = findContactById(contactId)
+    const findMeetings = findMeetingsByContact(contactId)
 
     contacts.splice(
       contacts.findIndex((contact) => contact.id === findContact.id),
       1
     )
+
+    findMeetings.forEach((meeting) => {
+      if (meeting.contactId === findContact.id) {
+        deleteMeetingById(meeting.id)
+      }
+    })
 
     res.status(200).json({ contact: findContact })
   } catch (error) {
@@ -142,12 +172,7 @@ app.get('/meetings/:id', (req, res, next) => {
 // Delete a meeting by id
 app.delete('/meetings/:id', (req, res, next) => {
   try {
-    const findMeeting = findMeetingById(req.params.id)
-
-    meetings.splice(
-      meetings.findIndex((meeting) => meeting.id === findMeeting.id),
-      1
-    )
+    const findMeeting = deleteMeetingById(req.params.id)
 
     res.status(200).json({ meeting: findMeeting })
   } catch (error) {
@@ -177,11 +202,7 @@ app.put('/meetings/:id', (req, res, next) => {
 // Get meetings for a specific contact
 app.get('/contacts/:id/meetings', (req, res, next) => {
   try {
-    const findContact = findContactById(req.params.id)
-
-    const contactMeetings = meetings.filter(
-      (meeting) => meeting.contactId === findContact.id
-    )
+    const contactMeetings = findMeetingsByContact(req.params.id)
 
     res.status(200).json({ meetings: contactMeetings })
   } catch (error) {

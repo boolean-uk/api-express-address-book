@@ -5,6 +5,7 @@ const app = express()
 
 // import data
 const contacts = require('../data/contacts')
+const meetings = require('../data/meetings')
 
 // Configuration
 app.use(morgan('dev'))
@@ -13,6 +14,7 @@ app.use(express.json())
 
 // Global variables
 let idCounter = contacts.length + 1
+let meetingIdCounter = meetings.length + 1
 
 // Global functions
 const findContactById = (id) => {
@@ -101,6 +103,17 @@ app.put('/contacts/:id', (req, res, next) => {
   } catch (error) {
     res.status(error.status || 400).json({ message: error.message })
   }
+})
+
+// Retrieve a list of all meetings
+app.get('/meetings', (req, res, next) => {
+  if (!Array.isArray(meetings) || meetings.length === 0) {
+    return res.status(400).json({
+      message: 'Contacts must be non-empty array'
+    })
+  }
+
+  res.status(200).json({ meetings })
 })
 
 module.exports = app

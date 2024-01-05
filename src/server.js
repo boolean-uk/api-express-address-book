@@ -29,6 +29,18 @@ const findContactById = (id) => {
   return findContact
 }
 
+const findMeetingById = (id) => {
+  const findMeeting = meetings.find((meeting) => meeting.id === Number(id))
+
+  if (!findMeeting) {
+    const err = new Error(`Meeting with provided id doesn't found`)
+    err.status = 404
+    throw err
+  }
+
+  return findMeeting
+}
+
 // Retrieve a list of contacts
 app.get('/contacts', (req, res, next) => {
   if (!Array.isArray(contacts) || contacts.length === 0) {
@@ -114,6 +126,17 @@ app.get('/meetings', (req, res, next) => {
   }
 
   res.status(200).json({ meetings })
+})
+
+// Get a meeting by id
+app.get('/meetings/:id', (req, res, next) => {
+  try {
+    const findMeeting = findMeetingById(req.params.id)
+
+    res.status(200).json({ meeting: findMeeting })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
 })
 
 module.exports = app

@@ -210,4 +210,30 @@ app.get('/contacts/:id/meetings', (req, res, next) => {
   }
 })
 
+// Create a meeting for a contact
+app.post('/contacts/:id/meetings', (req, res, next) => {
+  try {
+    const { name } = req.body
+
+    const findContact = findContactById(req.params.id)
+
+    if (typeof name !== 'string') {
+      res.status(400).json({
+        message: 'Bad request, the name of the meeting must be a string'
+      })
+    }
+
+    const createdMeeting = {
+      id: meetingIdCounter++,
+      contactId: findContact.id,
+      name: name
+    }
+
+    meetings.push(createdMeeting)
+    res.status(201).json({ meeting: createdMeeting })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
+})
+
 module.exports = app

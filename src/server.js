@@ -155,4 +155,23 @@ app.delete('/meetings/:id', (req, res, next) => {
   }
 })
 
+// Update a meeting for a contact
+app.put('/meetings/:id', (req, res, next) => {
+  try {
+    const { name } = req.body
+
+    const findMeeting = findMeetingById(req.params.id)
+
+    const meetingIndex = meetings.findIndex(
+      (meeting) => meeting.id === findMeeting.id
+    )
+
+    meetings[meetingIndex] = { ...findMeeting, name: name }
+
+    res.status(200).json({ meeting: meetings[meetingIndex] })
+  } catch (error) {
+    res.status(error.status || 400).json({ message: error.message })
+  }
+})
+
 module.exports = app

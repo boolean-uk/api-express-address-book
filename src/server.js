@@ -103,7 +103,7 @@ app.put("/contacts/:id", (req, res) => {
     contact: foundContact,
   };
 
-  return res.status(201).json(contactToReturn)
+  return res.status(200).json(contactToReturn)
 
 
 });

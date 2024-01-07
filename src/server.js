@@ -93,6 +93,51 @@ const findStateIndex = (array, req) => {
   
     res.json({ contact: foundContact });
   });
+
+
+  // Code for the meeting part 
+
+  // Codes --- route for handling HTTP GET, Delete , Put , Post requests to the "/meetings by ID" endpoint. 
+
+app.get("/meetings", (req, res) => {
+    res.json({ meetings: STATE.meetings });
+  });
   
+  app.get("/meetings/:id", (req, res) => {
+    const foundIndex = findStateIndex(STATE.meetings, req);
+    res.json({ meeting: STATE.meetings[foundIndex] });
+  });
+  
+  app.delete("/meetings/:id", (req, res) => {
+    const foundIndex = findStateIndex(STATE.meetings, req);
+    const [removedMeeting] = STATE.meetings.splice(foundIndex, 1);
+    res.json({ meeting: removedMeeting });
+  });
+  
+  app.put("/meetings/:id", (req, res) => {
+    const foundMeetingIndex = findStateIndex(STATE.meetings, req);
+    const foundMeeting = STATE.meetings[foundMeetingIndex];
+  
+    foundMeeting.name = req.body.name;
+    res.json({ meeting: foundMeeting });
+  });
+  
+  app.get("/contacts/:id/meetings", (req, res) => {
+    const foundContactIndex = findStateIndex(STATE.contacts, req);
+    const foundMeetings = STATE.meetings.filter(
+      (meeting) => meeting.contactId === Number(req.params.id)
+    );
+    res.json({ meetings: foundMeetings });
+  });
+  
+  app.post("/contacts/:id/meetings", (req, res) => {
+    const count = STATE.meetings.push(req.body);
+    const newMeeting = { meeting: STATE.meetings[count - 1] };
+  
+    newMeeting.meeting.id = getNextMeetingId();
+    newMeeting.meeting.contactId = Number(req.params.id);
+  
+    res.status(201).json(newMeeting);
+  });
   
   module.exports = app;

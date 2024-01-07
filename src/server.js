@@ -75,7 +75,10 @@ app.post('/contacts/:id/meetings', (req, res) => {
 })
 
 app.put('/meetings/:id', (req, res) => {
-
+  const { id } = req.params
+  const { contactId, name } = req.body
+  const meeting = updateMeetingById(Number(id), name, contactId)
+  return res.json( { meeting })
 })
 
 app.delete('/meetings/:id', (req, res) => {

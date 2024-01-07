@@ -33,8 +33,14 @@ const getMeetingById = (id) => meetings.find((meeting) => meeting.id === id)
 const getMeetingsForContact = (contactId) => meetings.filter((meeting) => meeting.contactId === contactId)
 const updateMeetingById = (id, name, contactId) => {
   const meeting = getMeetingById(id)
-  meeting.name = name
-  meeting.contactId = contactId
+  if (name) {
+    meeting.name = name
+  }
+
+  if (contactId) {
+    meeting.contactId = contactId
+  }
+  
   return meeting
 }
 const deleteMeetingById = (id) => {

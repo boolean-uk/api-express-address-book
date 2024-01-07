@@ -29,4 +29,14 @@ const STATE = {
     meetings,
     nextMeetingId: 4,
   };
+
+// Function to get the next contact ID and meeting ID
+const getNextContactId = () => {
+    return STATE.nextContactId++;
+  };
+  
+  const getNextMeetingId = () => {
+    return STATE.nextMeetingId++;
+  };
+  
   

@@ -1,6 +1,7 @@
 const express = require("express")
 const morgan = require("morgan")
 const cors = require("cors")
+// initializing express app
 const app = express()
 
 app.use(morgan("dev"))
@@ -12,8 +13,7 @@ app.use(express.json())
 const contacts = require("../data/contacts.js");
 const meetings = require("../data/meetings.js");
 
-// initializing express app
-const app = express();
+
 
 // Middleware setup for logging and handling CORS
 app.use(morgan("dev"));

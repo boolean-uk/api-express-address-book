@@ -60,8 +60,8 @@ app.get('/contacts/:id/meetings', (req, res) => {
 app.post('/contacts/:id/meetings', (req, res) => {
   const { id } = req.params
   const { name } = req.body
-  const meetings = addMeeting(name, id)
-  return res.json( { meetings })
+  const meeting = addMeeting(name, Number(id))
+  return res.status(201).json( { meeting })
 })
 
 app.delete('/meetings/:id', (req, res) => {

@@ -37,6 +37,7 @@ app.delete('/contacts/:id', (req, res) => {
   const { id } = req.params
   const contact = getContactById(Number(id))
   deleteContactById(id)
+  deleteMeetingsForContact(Number(id))
   return res.json( { contact })
 })
 
@@ -48,6 +49,19 @@ app.get('/meetings/:id', (req, res) => {
   const { id } = req.params
   const meeting = getMeetingById(Number(id))
   return res.json( { meeting })
+})
+
+app.get('/contacts/:id/meetings', (req, res) => {
+  const { id } = req.params
+  const meetings = getMeetingsForContact(Number(id))
+  return res.json( { meetings })
+})
+
+app.post('/contacts/:id/meetings', (req, res) => {
+  const { id } = req.params
+  const { name } = req.body
+  const meetings = addMeeting(name, id)
+  return res.json( { meetings })
 })
 
 app.delete('/meetings/:id', (req, res) => {

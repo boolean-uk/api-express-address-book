@@ -50,4 +50,11 @@ app.get('/meetings/:id', (req, res) => {
   return res.json( { meeting })
 })
 
+app.delete('/meetings/:id', (req, res) => {
+  const { id } = req.params
+  const meeting = getMeetingById(Number(id))
+  deleteMeetingById(Number(id))
+  return res.json( { meeting })
+})
+
 module.exports = app

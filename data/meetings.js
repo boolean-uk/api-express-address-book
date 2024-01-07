@@ -30,6 +30,7 @@ initMeetingId()
 
 const getNewMeetingId = () => ++meetingId
 const getMeetingById = (id) => meetings.find((meeting) => meeting.id === id)
+const getMeetingsForContact = (contactIdAsNum) => meetings.filter((meeting) => meeting.contactId === String(contactIdAsNum))
 const deleteMeetingById = (id) => {
   const index = meetings.findIndex((meeting) => meeting.id === id)
   const deletedMeeting = meetings[index]
@@ -53,5 +54,6 @@ module.exports = {
   meetings,
   addMeeting,
   getMeetingById,
+  getMeetingsForContact,
   deleteMeetingById
 }

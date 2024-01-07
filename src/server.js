@@ -8,7 +8,7 @@ app.use(cors())
 app.use(express.json())
 
 const { contacts, addContact, getContactById, updateContact, deleteContactById } = require('../data/contacts.js')
-const { meetings, addMeeting, getMeetingById, getMeetingsForContact, deleteMeetingById } = require('../data/meetings.js')
+const { meetings, addMeeting, getMeetingById, getMeetingsForContact, deleteMeetingById, deleteMeetingsForContact } = require('../data/meetings.js')
 
 app.get('/contacts', (req, res) => {
   return res.json({ contacts })

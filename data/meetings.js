@@ -37,6 +37,11 @@ const deleteMeetingById = (id) => {
   meetings.splice(index, 1)
   return deletedMeeting
 }
+const deleteMeetingsForContact = (contactIdAsNum) => {
+  const meetings = getMeetingsForContact(contactIdAsNum)
+  meetings.forEach((meeting) => deleteMeetingById(meeting.id))
+  return meetings
+}
 
 class Meeting {
   constructor(name, contactId) {
@@ -55,5 +60,6 @@ module.exports = {
   addMeeting,
   getMeetingById,
   getMeetingsForContact,
-  deleteMeetingById
+  deleteMeetingById,
+  deleteMeetingsForContact
 }

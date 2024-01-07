@@ -44,4 +44,20 @@ app.post("/contacts", (req, res) => {
   return res.status(201).json(returnedContact)
 });
 
+app.get('/contacts/:id',(req,res)=>{
+    const contactId = Number(req.params.id)
+
+    const foundContact = data.find((contact) => contact.id === contactId)
+
+    if(!foundContact){
+        return res.status(404).json(`Contact with id ${contactId} not found`)
+    }
+    
+    const contactToReturn = {
+        "contact":foundContact
+    }
+
+    return res.status(200).json(contactToReturn)
+})
+
 module.exports = app;

@@ -60,19 +60,52 @@ app.get("/contacts/:id", (req, res) => {
   return res.status(200).json(contactToReturn);
 });
 
-app.delete("/contacts/:id",(req,res)=>{
+app.delete("/contacts/:id", (req, res) => {
+  const contactId = Number(req.params.id);
 
-    const contactId = Number(req.params.id)
+  const foundContact = data.find((contact) => contact.id === contactId);
 
-    const foundContact = data.find((contact)=> contact.id === contactId)
+  if (!foundContact) {
+    return res.status(404).json(`Contact with id ${contactId} not found`);
+  }
 
-    data.splice(data.indexOf(foundContact),1)
+  data.splice(data.indexOf(foundContact), 1);
 
-    const contactToReturn = {
-        contact: foundContact,
-      };
+  const contactToReturn = {
+    contact: foundContact,
+  };
 
-    return res.status(200).json(contactToReturn)
-})
+  return res.status(200).json(contactToReturn);
+});
+
+app.put("/contacts/:id", (req, res) => {
+  const contactId = Number(req.params.id);
+
+  const foundContact = data.find((contact) => contact.id === contactId);
+
+  if (!foundContact) {
+    return res.status(404).json(`Contact with id ${contactId} not found`);
+  }
+
+  const { firstName, lastName, street, city, type, email, linkedin, twitter } =
+  req.body;
+
+  foundContact.firstName = firstName
+  foundContact.lastName = lastName
+  foundContact.street = street
+  foundContact.city = city
+  foundContact.type = type
+  foundContact.email = email
+  foundContact.linkedin = linkedin
+  foundContact.twitter = twitter
+
+  const contactToReturn = {
+    contact: foundContact,
+  };
+
+  return res.status(201).json(contactToReturn)
+
+
+});
 
 module.exports = app;

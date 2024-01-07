@@ -38,5 +38,59 @@ const getNextContactId = () => {
   const getNextMeetingId = () => {
     return STATE.nextMeetingId++;
   };
+
+/**
+ * Function to find the index of an item in an array based on the ID in the request parameters.
+ * @param {array} array - The array to search in.
+ * @param {import('express').Request} req - The Express request object.
+ * @returns {number} - Index of the item in the array.
+ */
+const findStateIndex = (array, req) => {
+    const { id } = req.params;
+    const foundIndex = array.findIndex((contact) => contact.id === Number(id));
+    return foundIndex;
+  };
   
+  // Route to get all contacts
+  app.get("/contacts", (req, res) => {
+    res.json({ contacts: STATE.contacts });
+  });
+  
+  // Route to add a new contact
+  app.post("/contacts", (req, res) => {
+    const count = STATE.contacts.push(req.body);
+    const newContact = { contact: STATE.contacts[count - 1] };
+    newContact.contact.id = getNextContactId();
+    res.status(201).json(newContact);
+  });
+  
+  // Route to get a specific contact by ID
+  app.get("/contacts/:id", (req, res) => {
+    const foundIndex = findStateIndex(STATE.contacts, req);
+    res.json({ contact: STATE.contacts[foundIndex] });
+  });
+  
+  // Route to delete a contact by ID
+  app.delete("/contacts/:id", (req, res) => {
+    const foundContactIndex = findStateIndex(STATE.contacts, req);
+    const [removedContact] = STATE.contacts.splice(foundContactIndex, 1);
+  
+    // Remove associated meetings for the deleted contact
+    STATE.meetings = STATE.meetings.filter(
+      (meeting) => meeting.contactId !== Number(req.params.id)
+    );
+  
+    res.json({ contact: removedContact });
+  });
+  
+  // Route to update a contact by ID
+  app.put("/contacts/:id", (req, res) => {
+    const foundIndex = findStateIndex(STATE.contacts, req);
+    const foundContact = (STATE.contacts[foundIndex] = {
+      ...req.body,
+      id: Number(req.params.id),
+    });
+  
+    res.json({ contact: foundContact });
+  });
   

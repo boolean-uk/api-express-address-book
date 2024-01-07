@@ -8,6 +8,7 @@ app.use(cors())
 app.use(express.json())
 
 const { contacts, addContact, getContactById, updateContact, deleteContactById } = require('../data/contacts.js')
+const { meetings, addMeeting, getMeetingById, deleteMeetingById } = require('../data/meetings.js')
 
 app.get('/contacts', (req, res) => {
   return res.json({ contacts })
@@ -37,6 +38,10 @@ app.delete('/contacts/:id', (req, res) => {
   const contact = getContactById(Number(id))
   deleteContactById(id)
   return res.json( { contact })
+})
+
+app.get('/meetings/', (req, res) => {
+  return res.json( { meetings })
 })
 
 module.exports = app

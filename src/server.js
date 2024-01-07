@@ -35,27 +35,42 @@ app.post("/contacts", (req, res) => {
     twitter,
   };
 
-  data.push(newContact)
+  data.push(newContact);
 
   const returnedContact = {
-    "contact": newContact
-  }
+    contact: newContact,
+  };
 
-  return res.status(201).json(returnedContact)
+  return res.status(201).json(returnedContact);
 });
 
-app.get('/contacts/:id',(req,res)=>{
+app.get("/contacts/:id", (req, res) => {
+  const contactId = Number(req.params.id);
+
+  const foundContact = data.find((contact) => contact.id === contactId);
+
+  if (!foundContact) {
+    return res.status(404).json(`Contact with id ${contactId} not found`);
+  }
+
+  const contactToReturn = {
+    contact: foundContact,
+  };
+
+  return res.status(200).json(contactToReturn);
+});
+
+app.delete("/contacts/:id",(req,res)=>{
+
     const contactId = Number(req.params.id)
 
-    const foundContact = data.find((contact) => contact.id === contactId)
+    const foundContact = data.find((contact)=> contact.id === contactId)
 
-    if(!foundContact){
-        return res.status(404).json(`Contact with id ${contactId} not found`)
-    }
-    
+    data.splice(data.indexOf(foundContact),1)
+
     const contactToReturn = {
-        "contact":foundContact
-    }
+        contact: foundContact,
+      };
 
     return res.status(200).json(contactToReturn)
 })

@@ -21,3 +21,12 @@ app.use(cors());
 app.use(express.json());
 
 module.exports = app
+
+// intial  state setup for contacts and meetings
+const STATE = {
+    contacts,
+    nextContactId: 3,
+    meetings,
+    nextMeetingId: 4,
+  };
+  

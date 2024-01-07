@@ -94,3 +94,5 @@ const findStateIndex = (array, req) => {
     res.json({ contact: foundContact });
   });
   
+  
+  module.exports = app;

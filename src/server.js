@@ -7,8 +7,18 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
 
-const { contacts, addContact, getContactById, updateContact, deleteContactById } = require('../data/contacts.js')
-const { meetings, addMeeting, getMeetingById, getMeetingsForContact, deleteMeetingById, deleteMeetingsForContact } = require('../data/meetings.js')
+const { contacts,
+  addContact,
+  getContactById,
+  updateContact,
+  deleteContactById } = require('../data/contacts.js')
+const { meetings,
+  addMeeting,
+  getMeetingById,
+  getMeetingsForContact,
+  updateMeetingById,
+  deleteMeetingById,
+  deleteMeetingsForContact } = require('../data/meetings.js')
 
 app.get('/contacts', (req, res) => {
   return res.json({ contacts })
@@ -62,6 +72,10 @@ app.post('/contacts/:id/meetings', (req, res) => {
   const { name } = req.body
   const meeting = addMeeting(name, Number(id))
   return res.status(201).json( { meeting })
+})
+
+app.put('/meetings/:id', (req, res) => {
+
 })
 
 app.delete('/meetings/:id', (req, res) => {

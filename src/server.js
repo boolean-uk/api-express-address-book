@@ -1,13 +1,23 @@
-const express = require("express")
-const morgan = require("morgan")
-const cors = require("cors")
-const app = express()
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 
-app.use(morgan("dev"))
-app.use(cors())
-app.use(express.json())
+const app = express();
 
-// write your app code here
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
 
+app.get("/", (req, res) => {
+    return res.status(200).json("Welcome to contacts");
+});
 
-module.exports = app
+const contactsRouter = require("./routers/contactsEndpoints.js");
+app.use('/contacts', contactsRouter);
+
+// ............... EXTENSION ..............
+
+const meetingsRouter = require('./routers/meetingsEndpoints.js')
+app.use(meetingsRouter)
+
+module.exports = app;

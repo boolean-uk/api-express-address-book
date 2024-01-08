@@ -3,8 +3,9 @@ const router = express.Router();
 
 const { contacts } = require("../../data/contacts.js");
 let { idCounter } = require("../../data/contacts.js");
+const { meetings } = require('../../data/meetings.js')
 
-const findContactById = require("../client.js");
+const {findContactById} = require("../client.js");
 
 router.get("/", (req, res) => {
     return res.status(200).json({ contacts: contacts });

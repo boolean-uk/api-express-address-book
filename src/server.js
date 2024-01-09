@@ -7,7 +7,7 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(express.json())
 
-// write your app code here
+
 
 
 module.exports = app

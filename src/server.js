@@ -34,9 +34,19 @@ app.post('/contacts', (req, res) => {
 })
 
 app.put('/contacts/:id', (req, res) => {
-    // can't get this to work
+    const id = Number(req.params.id);
+    const index = contacts.findIndex((c) => c.id === id);
 
-    return res.status(200).json()
+    console.log(index)
+
+    if (index !== -1) {
+        const updatedContact = { id, ...req.body }
+        contacts[index] = updatedContact
+        res.status(200).json({ contact: updatedContact })
+    } else {
+        res.status(404).json()
+    }
+
 })
 
 app.delete('/contacts/:id', (req, res) => {
